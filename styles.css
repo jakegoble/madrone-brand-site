@@ -1,5 +1,5 @@
 /* ============================================
-   MADRONE STUDIOS — Design System
+   MADRONE STUDIOS â Design System
    ============================================ */
 
 /* ---------- Design Tokens ---------- */
@@ -525,12 +525,33 @@ em {
     margin-top: 0.25rem;
 }
 
+/* ---------- Why Tagline ---------- */
+.why-tagline {
+    font-family: var(--font-heading);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 200;
+    font-style: italic;
+    color: var(--color-accent);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-lg);
+    opacity: 0.85;
+}
+
 /* ---------- Split Layout ---------- */
 .split-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-lg);
     align-items: start;
+}
+
+.split-layout--why {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: start;
+}
+
+.stat-card--inline {
+    margin-top: 1.5rem;
 }
 
 .stat-card {
@@ -608,10 +629,12 @@ em {
 
 /* ---------- Service Pillars ---------- */
 .service-pillars {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
     justify-content: center;
     gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .service-pill {
@@ -853,20 +876,29 @@ em {
     background: var(--color-glass-hover);
 }
 
-.partner-icon {
-    width: 40px;
-    height: 40px;
+.partner-icon,
+.partner-logo {
     margin-bottom: 1rem;
     color: var(--color-accent);
     opacity: 0.8;
     transition: opacity 0.3s;
 }
 
-.partner-card:hover .partner-icon {
+.partner-logo {
+    width: 120px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-card:hover .partner-icon,
+.partner-card:hover .partner-logo {
     opacity: 1;
 }
 
-.partner-icon svg {
+.partner-icon svg,
+.partner-logo svg {
     width: 100%;
     height: 100%;
 }
@@ -1094,6 +1126,89 @@ em {
     color: var(--color-accent);
 }
 
+/* ---------- Contact Animated BG ---------- */
+.section-bg--animated {
+    overflow: hidden;
+}
+
+.contact-bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        160deg,
+        #050507 0%,
+        #0a1a1f 25%,
+        #0d2a2d 45%,
+        #0f3538 60%,
+        #0a2426 75%,
+        #050507 100%
+    );
+    z-index: 1;
+}
+
+.contact-bg-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    pointer-events: none;
+    animation: grainShift 8s steps(10) infinite;
+}
+
+@keyframes grainShift {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    20% { transform: translate(-15%, 5%); }
+    30% { transform: translate(7%, -15%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-15%, 10%); }
+    60% { transform: translate(15%, 0%); }
+    70% { transform: translate(0%, 10%); }
+    80% { transform: translate(3%, -15%); }
+    90% { transform: translate(-10%, 10%); }
+}
+
+.contact-bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.contact-bg-glow--1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, transparent 70%);
+    top: -10%;
+    right: -5%;
+    animation: glowDrift1 12s ease-in-out infinite alternate;
+}
+
+.contact-bg-glow--2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(225, 163, 119, 0.08) 0%, transparent 70%);
+    bottom: -15%;
+    left: -5%;
+    animation: glowDrift2 15s ease-in-out infinite alternate;
+}
+
+@keyframes glowDrift1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, 30px) scale(1.1); }
+    100% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+@keyframes glowDrift2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -20px) scale(1.05); }
+    100% { transform: translate(-20px, 15px) scale(1.1); }
+}
+
 /* ---------- Contact ---------- */
 .section--last {
     padding-bottom: 2rem;
@@ -1243,8 +1358,12 @@ em {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
-    .split-layout {
+    .split-layout,
+    .split-layout--why {
         grid-template-columns: 1fr;
+    }
+    .service-pillars {
+        grid-template-columns: repeat(2, auto);
     }
     .case-studies-grid {
         grid-template-columns: 1fr;
