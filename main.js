@@ -1,67 +1,97 @@
 /* ============================================
    MADRONE STUDIOS — Scroll Animations & Interactions
+   v2.0 — Full audit fix pass
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
+    'use strict';
+
+    // Ensure GSAP is available
+    if (typeof gsap === 'undefined') {
+        console.warn('GSAP not loaded');
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     // ---------- Preloader ----------
     const preloader = document.getElementById('preloader');
-    window.addEventListener('load', () => {
+    let animationsInitialized = false;
+
+    function dismissPreloader() {
+        if (animationsInitialized) return;
+        animationsInitialized = true;
+
         gsap.to(preloader, {
             opacity: 0,
             duration: 0.8,
-            delay: 0.5,
             ease: 'power2.inOut',
             onComplete: () => {
                 preloader.classList.add('is-hidden');
-                initAnimations();
+                preloader.style.display = 'none';
+                // Small delay to let layout settle
+                requestAnimationFrame(() => {
+                    initAnimations();
+                    ScrollTrigger.refresh();
+                });
             }
         });
-    });
+    }
 
-    // Fallback in case load fires before DOMContentLoaded listener
+    // Strategy: fire on whichever comes first — load event or DOM ready + timeout
     if (document.readyState === 'complete') {
-        setTimeout(() => {
-            gsap.to(preloader, {
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power2.inOut',
-                onComplete: () => {
-                    preloader.classList.add('is-hidden');
-                    initAnimations();
-                }
-            });
-        }, 800);
+        // Page already fully loaded
+        setTimeout(dismissPreloader, 400);
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(dismissPreloader, 400);
+        });
+        // Hard fallback: if nothing fires within 3 seconds, dismiss anyway
+        setTimeout(dismissPreloader, 3000);
     }
 
     // ---------- Cursor Glow ----------
     const cursorGlow = document.getElementById('cursorGlow');
-    let mouseX = 0, mouseY = 0;
-    let glowX = 0, glowY = 0;
+    if (cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let glowX = mouseX, glowY = mouseY;
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
 
-    function updateCursorGlow() {
-        glowX += (mouseX - glowX) * 0.08;
-        glowY += (mouseY - glowY) * 0.08;
-        cursorGlow.style.left = glowX + 'px';
-        cursorGlow.style.top = glowY + 'px';
+        function updateCursorGlow() {
+            glowX += (mouseX - glowX) * 0.06;
+            glowY += (mouseY - glowY) * 0.06;
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+            requestAnimationFrame(updateCursorGlow);
+        }
         requestAnimationFrame(updateCursorGlow);
+    } else if (cursorGlow) {
+        cursorGlow.style.display = 'none';
     }
-    updateCursorGlow();
 
     // ---------- Progress Bar ----------
     const progressBar = document.getElementById('progressBar');
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        progressBar.style.width = progress + '%';
-    });
+    if (progressBar) {
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    if (docHeight > 0) {
+                        progressBar.style.width = ((scrollTop / docHeight) * 100) + '%';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
 
     // ---------- Navigation ----------
     const nav = document.getElementById('mainNav');
@@ -69,44 +99,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const navDotsContainer = document.getElementById('navDots');
 
     // Create nav dots
-    sections.forEach((section, i) => {
-        const dot = document.createElement('div');
-        dot.classList.add('nav-dot');
-        if (i === 0) dot.classList.add('is-active');
-        dot.addEventListener('click', () => {
-            section.scrollIntoView({ behavior: 'smooth' });
+    if (navDotsContainer) {
+        sections.forEach((section, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('nav-dot');
+            if (i === 0) dot.classList.add('is-active');
+            dot.addEventListener('click', () => {
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+            navDotsContainer.appendChild(dot);
         });
-        navDotsContainer.appendChild(dot);
-    });
+    }
 
     const navDots = document.querySelectorAll('.nav-dot');
 
-    // Scroll handler for nav
-    let lastScroll = 0;
+    // Throttled scroll handler for nav
+    let navTicking = false;
     window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
+        if (!navTicking) {
+            requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
 
-        // Nav background
-        if (scrollTop > 100) {
-            nav.classList.add('is-scrolled');
-        } else {
-            nav.classList.remove('is-scrolled');
+                // Nav background
+                if (nav) {
+                    nav.classList.toggle('is-scrolled', scrollTop > 80);
+                }
+
+                // Active dot
+                let current = 0;
+                sections.forEach((section, i) => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.5) {
+                        current = i;
+                    }
+                });
+                navDots.forEach((dot, i) => {
+                    dot.classList.toggle('is-active', i === current);
+                });
+
+                navTicking = false;
+            });
+            navTicking = true;
         }
-
-        // Active dot
-        let current = 0;
-        sections.forEach((section, i) => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.5) {
-                current = i;
-            }
-        });
-        navDots.forEach((dot, i) => {
-            dot.classList.toggle('is-active', i === current);
-        });
-
-        lastScroll = scrollTop;
-    });
+    }, { passive: true });
 
     // ---------- Main Animations ----------
     function initAnimations() {
@@ -144,13 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power2.out'
             }, '-=0.2');
 
-        // Section labels and headlines - scroll triggered
+        // Section labels — scroll triggered
         document.querySelectorAll('.section-label').forEach(el => {
             gsap.from(el, {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 15,
@@ -163,8 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.from(el, {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 30,
@@ -177,24 +212,24 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.from(el, {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 20,
                 duration: 0.8,
-                delay: 0.2,
+                delay: 0.15,
                 ease: 'power3.out'
             });
         });
 
-        // Reveal elements with stagger
+        // Reveal elements
         document.querySelectorAll('[data-reveal]').forEach(el => {
             gsap.from(el, {
                 scrollTrigger: {
                     trigger: el,
-                    start: 'top 88%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 30,
@@ -209,8 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.from(cards, {
                 scrollTrigger: {
                     trigger: grid,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 82%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 40,
@@ -226,8 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.from(pillarCards, {
                 scrollTrigger: {
                     trigger: '.pillars-grid',
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 82%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 40,
@@ -244,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.service-pillars',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 20,
@@ -261,8 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.from(capItems, {
                 scrollTrigger: {
                     trigger: '.capabilities-list',
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 82%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 x: -30,
@@ -275,19 +310,41 @@ document.addEventListener('DOMContentLoaded', () => {
         // ---------- Animated Counters ----------
         document.querySelectorAll('[data-count]').forEach(el => {
             const target = parseInt(el.getAttribute('data-count'));
+            const obj = { val: 0 };
 
             ScrollTrigger.create({
                 trigger: el,
-                start: 'top 85%',
+                start: 'top 88%',
                 once: true,
                 onEnter: () => {
-                    gsap.to(el, {
-                        innerText: target,
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 2.2,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            el.textContent = Math.round(obj.val);
+                        }
+                    });
+                }
+            });
+        });
+
+        // Stat card counters (91% in "Why Now")
+        document.querySelectorAll('.stat-card-number[data-count]').forEach(el => {
+            const target = parseInt(el.getAttribute('data-count'));
+            const obj = { val: 0 };
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 88%',
+                once: true,
+                onEnter: () => {
+                    gsap.to(obj, {
+                        val: target,
                         duration: 2,
                         ease: 'power2.out',
-                        snap: { innerText: 1 },
-                        onUpdate: function() {
-                            el.innerText = Math.ceil(parseFloat(el.innerText));
+                        onUpdate: () => {
+                            el.textContent = Math.round(obj.val);
                         }
                     });
                 }
@@ -295,16 +352,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // ---------- Budget Bars ----------
-        document.querySelectorAll('.budget-fill').forEach(fill => {
+        document.querySelectorAll('.budget-fill').forEach((fill, i) => {
             const targetWidth = fill.getAttribute('data-width');
-            fill.style.setProperty('--target-width', targetWidth);
 
             ScrollTrigger.create({
-                trigger: fill,
-                start: 'top 90%',
+                trigger: fill.closest('.budget-bar'),
+                start: 'top 92%',
                 once: true,
                 onEnter: () => {
-                    fill.classList.add('is-visible');
+                    gsap.to(fill, {
+                        width: targetWidth + '%',
+                        duration: 1.2,
+                        delay: i * 0.1,
+                        ease: 'power2.out'
+                    });
                 }
             });
         });
@@ -318,20 +379,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     end: 'bottom top',
                     scrub: 1.5
                 },
-                y: -60,
-                scale: 1.08,
+                y: -50,
+                scale: 1.06,
                 ease: 'none'
             });
         });
 
-        // ---------- Contact CTA hover effect ----------
+        // ---------- CTA Button ----------
         const ctaButton = document.querySelector('.cta-button');
         if (ctaButton) {
             gsap.from(ctaButton, {
                 scrollTrigger: {
                     trigger: ctaButton,
-                    start: 'top 90%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 92%',
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 20,
@@ -348,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.engagement-options',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 40,
@@ -365,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.venue-details',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 25,
@@ -382,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.case-studies-grid',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 40,
@@ -399,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.partners-grid',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 25,
@@ -417,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: {
                     trigger: '.team-grid',
                     start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    toggleActions: 'play none none none'
                 },
                 opacity: 0,
                 y: 30,
@@ -428,16 +489,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // ---------- Footer bar ----------
-        gsap.from('.footer-bar', {
-            scrollTrigger: {
-                trigger: '.footer-bar',
-                start: 'top 95%',
-                toggleActions: 'play none none reverse'
-            },
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out'
-        });
+        const footerBar = document.querySelector('.footer-bar');
+        if (footerBar) {
+            gsap.from(footerBar, {
+                scrollTrigger: {
+                    trigger: footerBar,
+                    start: 'top 95%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out'
+            });
+        }
+
+        // ---------- Contact section icon spin ----------
+        const contactIcon = document.querySelector('.contact-icon');
+        if (contactIcon) {
+            gsap.from(contactIcon, {
+                scrollTrigger: {
+                    trigger: contactIcon,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                rotation: -90,
+                scale: 0.5,
+                duration: 1.2,
+                ease: 'back.out(1.5)'
+            });
+        }
     }
 
     // Smooth scroll for anchor links
@@ -450,4 +531,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-});
+
+})();
