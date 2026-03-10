@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madrone Studios â The Architects of Culture</title>
-    <meta name="description" content="Madrone Studios creates cultural moments that move brands. AI-native, culturally fluent brand partnership experiences.">
+    <title>Madrone Studios — The Architects of Culture</title>
+    <meta name="description" content="Madrone Studios creates cultural moments that move brands forward. AI-native, culturally fluent brand partnership experiences built in Venice Beach, Los Angeles.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Madrone Studios — The Architects of Culture">
+    <meta property="og:description" content="AI-native, culturally fluent brand partnership experiences. One partner. One vision. Total execution.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://madrone-brand-site.vercel.app/">
+    <meta property="og:image" content="https://madrone-brand-site.vercel.app/assets/images/bg/bg-01.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='10' cy='10' r='5' fill='%23e1a377'/%3E%3Ccircle cx='30' cy='10' r='5' fill='%23e1a377'/%3E%3Ccircle cx='10' cy='30' r='5' fill='%23e1a377'/%3E%3Ccircle cx='30' cy='30' r='5' fill='%23e1a377'/%3E%3C/svg%3E">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,9 +25,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <!-- Skip Navigation -->
+    <a href="#bigIdea" class="skip-nav">Skip to content</a>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader">
@@ -39,19 +55,37 @@
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- Navigation -->
-    <nav class="nav" id="mainNav">
-        <div class="nav-logo">
-            <svg class="nav-icon" viewBox="0 0 40 40" width="32" height="32">
-                <circle cx="10" cy="10" r="4" fill="#e1a377"/>
-                <circle cx="30" cy="10" r="4" fill="#e1a377"/>
-                <circle cx="10" cy="30" r="4" fill="#e1a377"/>
-                <circle cx="30" cy="30" r="4" fill="#e1a377"/>
-            </svg>
-            <span class="nav-wordmark">MADRONE STUDIOS</span>
+    <header>
+        <nav class="nav" id="mainNav" role="navigation" aria-label="Main navigation">
+            <div class="nav-logo">
+                <svg class="nav-icon" viewBox="0 0 40 40" width="32" height="32" aria-hidden="true">
+                    <circle cx="10" cy="10" r="4" fill="#e1a377"/>
+                    <circle cx="30" cy="10" r="4" fill="#e1a377"/>
+                    <circle cx="10" cy="30" r="4" fill="#e1a377"/>
+                    <circle cx="30" cy="30" r="4" fill="#e1a377"/>
+                </svg>
+                <span class="nav-wordmark"><span class="nav-wordmark-light">MADRONE</span> <span class="nav-wordmark-bold">STUDIOS</span></span>
+            </div>
+            <div class="nav-dots" id="navDots"></div>
+            <a href="#contact" class="nav-cta">Start a Conversation</a>
+            <!-- Mobile hamburger -->
+            <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+        <!-- Mobile menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#bigIdea" class="mobile-menu-link">The Big Idea</a>
+            <a href="#ourEdge" class="mobile-menu-link">Our Edge</a>
+            <a href="#whyNow" class="mobile-menu-link">Why Now</a>
+            <a href="#modelIntro" class="mobile-menu-link">Our Model</a>
+            <a href="#caseStudies" class="mobile-menu-link">Case Studies</a>
+            <a href="#venue" class="mobile-menu-link">Venue</a>
+            <a href="#contact" class="mobile-menu-link">Contact</a>
         </div>
-        <div class="nav-dots" id="navDots"></div>
-        <a href="#contact" class="nav-cta">Start a Conversation</a>
-    </nav>
+    </header>
+
+    <main>
 
     <!-- ========== SECTION 1: HERO ========== -->
     <section class="section hero" id="hero" data-section="0">
@@ -63,7 +97,7 @@
             <p class="hero-eyebrow">MADRONE STUDIOS</p>
             <h1 class="hero-title">
                 <span class="title-line">The Architects</span>
-                <span class="title-line">of <em class="accent">Culture</em></span>
+                <span class="title-line">of <em class="accent accent--italic">Culture</em></span>
             </h1>
             <p class="hero-subtitle">Brand Partnership Experiences</p>
             <div class="hero-line"></div>
@@ -88,7 +122,8 @@
             </h2>
             <p class="section-body">
                 We don't run campaigns. We create immersive, AI-powered cultural experiences
-                that put brands at the center of moments people never forget.
+                that put brands at the center of moments people never forget. From strategy through
+                production and amplification — one partner, one vision, total execution.
             </p>
         </div>
     </section>
@@ -96,7 +131,8 @@
     <!-- ========== SECTION 3: OUR EDGE ========== -->
     <section class="section" id="ourEdge" data-section="2">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-06.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container">
             <p class="section-label">OUR EDGE</p>
@@ -107,16 +143,12 @@
                 <div class="glass-card" data-reveal>
                     <div class="card-icon">
                         <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <!-- Magnet pulling person â Brand-to-Audience Matching -->
-                            <!-- Magnet -->
                             <path d="M10 28c0-7.732 6.268-14 14-14s14 6.268 14 14" stroke="#e1a377" stroke-width="1.5" fill="none"/>
                             <rect x="8" y="28" width="5" height="10" rx="1" fill="#e1a377" opacity="0.25" stroke="#e1a377" stroke-width="1"/>
                             <rect x="35" y="28" width="5" height="10" rx="1" fill="#e1a377" opacity="0.25" stroke="#e1a377" stroke-width="1"/>
                             <path d="M10.5 33h5M32.5 33h5" stroke="#e1a377" stroke-width="0.8" opacity="0.4"/>
-                            <!-- Person silhouette -->
                             <circle cx="24" cy="18" r="3.5" stroke="#e1a377" stroke-width="1.2" fill="none"/>
                             <path d="M18 28c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#e1a377" stroke-width="1.2" fill="none"/>
-                            <!-- Attraction lines -->
                             <path d="M15 22l-2-1M33 22l2-1" stroke="#e1a377" stroke-width="0.8" opacity="0.5"/>
                         </svg>
                     </div>
@@ -126,18 +158,13 @@
                 <div class="glass-card" data-reveal>
                     <div class="card-icon">
                         <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <!-- Target with org chart nodes â Decision Maker Intelligence -->
-                            <!-- Bullseye target -->
                             <circle cx="24" cy="24" r="16" stroke="#e1a377" stroke-width="1" opacity="0.3"/>
                             <circle cx="24" cy="24" r="10" stroke="#e1a377" stroke-width="1.2" opacity="0.5"/>
                             <circle cx="24" cy="24" r="4" stroke="#e1a377" stroke-width="1.5" fill="rgba(225,163,119,0.15)"/>
-                            <!-- Decision nodes -->
                             <circle cx="24" cy="8" r="2.5" stroke="#e1a377" stroke-width="1" fill="rgba(225,163,119,0.2)"/>
                             <circle cx="10" cy="36" r="2.5" stroke="#e1a377" stroke-width="1" fill="rgba(225,163,119,0.2)"/>
                             <circle cx="38" cy="36" r="2.5" stroke="#e1a377" stroke-width="1" fill="rgba(225,163,119,0.2)"/>
-                            <!-- Connecting lines -->
                             <path d="M24 10.5v3.5M12 34.5l6-5M36 34.5l-6-5" stroke="#e1a377" stroke-width="0.8" opacity="0.5" stroke-dasharray="2 2"/>
-                            <!-- Checkmarks on nodes -->
                             <path d="M22.5 8l1.2 1.2 2.3-2.4" stroke="#e1a377" stroke-width="1"/>
                             <path d="M8.5 36l1.2 1.2 2.3-2.4" stroke="#e1a377" stroke-width="1"/>
                             <path d="M36.5 36l1.2 1.2 2.3-2.4" stroke="#e1a377" stroke-width="1"/>
@@ -149,18 +176,13 @@
                 <div class="glass-card" data-reveal>
                     <div class="card-icon">
                         <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <!-- Radar broadcast â Cultural Signal Tracking -->
-                            <!-- Central beacon -->
                             <circle cx="24" cy="24" r="3" fill="#e1a377" opacity="0.3" stroke="#e1a377" stroke-width="1.5"/>
-                            <!-- Broadcast waves -->
                             <path d="M18 18a8.485 8.485 0 0112 0" stroke="#e1a377" stroke-width="1.3" fill="none"/>
                             <path d="M14 14a14.142 14.142 0 0120 0" stroke="#e1a377" stroke-width="1.1" fill="none" opacity="0.7"/>
                             <path d="M10 10a19.799 19.799 0 0128 0" stroke="#e1a377" stroke-width="0.9" fill="none" opacity="0.4"/>
-                            <!-- Bottom waves -->
                             <path d="M18 30a8.485 8.485 0 0012 0" stroke="#e1a377" stroke-width="1.3" fill="none"/>
                             <path d="M14 34a14.142 14.142 0 0020 0" stroke="#e1a377" stroke-width="1.1" fill="none" opacity="0.7"/>
                             <path d="M10 38a19.799 19.799 0 0028 0" stroke="#e1a377" stroke-width="0.9" fill="none" opacity="0.4"/>
-                            <!-- Signal dots -->
                             <circle cx="24" cy="24" r="1.5" fill="#e1a377"/>
                             <circle cx="12" cy="24" r="1" fill="#e1a377" opacity="0.4"/>
                             <circle cx="36" cy="24" r="1" fill="#e1a377" opacity="0.4"/>
@@ -206,7 +228,7 @@
             <div class="split-layout split-layout--why">
                 <div class="split-left">
                     <p class="section-body">
-                        Consumers don't want to be marketed to â they want to be part of something.
+                        Consumers don't want to be marketed to — they want to be part of something.
                         The brands winning right now are the ones showing up in culture, not just advertising around it.
                     </p>
                     <div class="stat-card stat-card--inline" data-reveal>
@@ -237,11 +259,12 @@
         <div class="container container--center">
             <p class="section-label">OUR MODEL</p>
             <h2 class="section-headline section-headline--large">
-                One Partner.<br>One Vision.<br><em class="accent">Total Execution.</em>
+                One Partner.<br>One Vision.<br><em class="accent accent--italic">Total Execution.</em>
             </h2>
             <p class="section-body section-body--centered">
                 No agency layers. No vendor chaos. One creative team that handles
-                strategy, production, and amplification under one roof.
+                strategy, production, and amplification under one roof — from concept
+                through post-event storytelling.
             </p>
         </div>
     </section>
@@ -249,26 +272,27 @@
     <!-- ========== SECTION 6: OUR MODEL PILLARS ========== -->
     <section class="section section--compact" id="modelPillars" data-section="5">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-10.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container">
             <div class="pillars-grid">
                 <div class="pillar-card" data-reveal>
                     <span class="pillar-number">01</span>
                     <h3 class="pillar-title">Strategy</h3>
-                    <p class="pillar-text">Cultural research, audience mapping, brand alignment, concept development, and AI-powered trend intelligence.</p>
+                    <p class="pillar-text">Cultural research, audience mapping, brand alignment, concept development, and AI-powered trend intelligence that identifies opportunities before the market catches on.</p>
                     <div class="pillar-line"></div>
                 </div>
                 <div class="pillar-card" data-reveal>
                     <span class="pillar-number">02</span>
                     <h3 class="pillar-title">Production</h3>
-                    <p class="pillar-text">Venue design, AV, lighting, talent booking, hospitality, branding, and full event build-out from concept to completion.</p>
+                    <p class="pillar-text">Venue design, AV, lighting, talent booking, hospitality, branding, and full event build-out from concept to completion — executed by one team, not five vendors.</p>
                     <div class="pillar-line"></div>
                 </div>
                 <div class="pillar-card" data-reveal>
                     <span class="pillar-number">03</span>
                     <h3 class="pillar-title">Amplification</h3>
-                    <p class="pillar-text">Content capture, social strategy, influencer seeding, post-event reporting, and ongoing cultural storytelling.</p>
+                    <p class="pillar-text">Content capture, social strategy, influencer seeding, post-event reporting, and ongoing cultural storytelling that extends every activation's lifespan.</p>
                     <div class="pillar-line"></div>
                 </div>
             </div>
@@ -278,7 +302,8 @@
     <!-- ========== SECTION 7: ENGAGEMENT FRAMEWORK ========== -->
     <section class="section section--compact" id="framework" data-section="6">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--subtle"></div>
+            <img src="assets/images/bg/bg-11.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container container--center">
             <p class="section-label">$1M+ ENGAGEMENT FRAMEWORK</p>
@@ -286,13 +311,13 @@
                 Integrated <em class="accent">Experiences</em>,<br>Not Line Items
             </h2>
             <div class="service-pillars">
-                <div class="service-pill" data-reveal>Venue & Space</div>
-                <div class="service-pill" data-reveal>AV & Production</div>
+                <div class="service-pill" data-reveal>Venue &amp; Space</div>
+                <div class="service-pill" data-reveal>AV &amp; Production</div>
                 <div class="service-pill" data-reveal>Hospitality</div>
-                <div class="service-pill" data-reveal>Branding & Design</div>
-                <div class="service-pill" data-reveal>Talent & Programming</div>
-                <div class="service-pill" data-reveal>Logistics & Ops</div>
-                <div class="service-pill" data-reveal>Content & Reach</div>
+                <div class="service-pill" data-reveal>Branding &amp; Design</div>
+                <div class="service-pill" data-reveal>Talent &amp; Programming</div>
+                <div class="service-pill" data-reveal>Logistics &amp; Ops</div>
+                <div class="service-pill" data-reveal>Content &amp; Reach</div>
             </div>
         </div>
     </section>
@@ -308,6 +333,10 @@
             <h2 class="section-headline">
                 Only Four Flagship Partners<br><em class="accent">Per Year</em>
             </h2>
+            <p class="section-body section-body--centered" style="margin-bottom: var(--space-lg);">
+                Exclusivity isn't a constraint — it's the entire point. We limit our roster so every partner
+                gets our full creative attention, not a fraction of it.
+            </p>
             <div class="capacity-stats">
                 <div class="capacity-stat" data-reveal>
                     <span class="capacity-number" data-count="4">0</span>
@@ -319,7 +348,7 @@
                 </div>
                 <div class="capacity-stat" data-reveal>
                     <span class="capacity-number" data-count="100">0</span><span class="capacity-suffix">%</span>
-                    <span class="capacity-label">Creative Focus<br>& Commitment</span>
+                    <span class="capacity-label">Creative Focus<br>&amp; Commitment</span>
                 </div>
             </div>
         </div>
@@ -345,7 +374,7 @@
                             <span class="case-highlight-number">2.3M</span>
                             <span class="case-highlight-label">Impressions</span>
                         </div>
-                        <p class="case-desc">Multi-sensory product launch experience combining AI-driven personalization with cultural programming.</p>
+                        <p class="case-desc">Multi-sensory product launch experience combining AI-driven personalization with cultural programming across a 3-day Venice Beach takeover.</p>
                     </div>
                 </div>
                 <div class="case-card" data-reveal>
@@ -356,7 +385,7 @@
                             <span class="case-highlight-number">85%</span>
                             <span class="case-highlight-label">Media Coverage</span>
                         </div>
-                        <p class="case-desc">Exclusive fashion week activation that merged brand identity with emerging cultural movements.</p>
+                        <p class="case-desc">Exclusive fashion week activation that merged brand identity with emerging cultural movements, generating organic press and influencer amplification.</p>
                     </div>
                 </div>
                 <div class="case-card" data-reveal>
@@ -367,7 +396,7 @@
                             <span class="case-highlight-number">$3.2M</span>
                             <span class="case-highlight-label">Earned Media</span>
                         </div>
-                        <p class="case-desc">Festival-integrated product reveal generating organic buzz across social, press, and influencer channels.</p>
+                        <p class="case-desc">Festival-integrated product reveal generating organic buzz across social, press, and influencer channels with a 12:1 earned-to-paid media ratio.</p>
                     </div>
                 </div>
             </div>
@@ -377,7 +406,8 @@
     <!-- ========== SECTION 10: LEADERSHIP ========== -->
     <section class="section" id="leadership" data-section="9">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-16.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container">
             <p class="section-label">LEADERSHIP</p>
@@ -390,14 +420,16 @@
                         <div class="team-image-placeholder"></div>
                     </div>
                     <h3 class="team-name">Jon Rowe</h3>
-                    <p class="team-role">Co-Founder & Creative Director</p>
+                    <p class="team-role">Co-Founder &amp; Creative Director</p>
+                    <p class="team-bio">10+ years producing large-scale cultural events, from brand activations to music festivals.</p>
                 </div>
                 <div class="team-card" data-reveal>
                     <div class="team-image-wrap">
                         <div class="team-image-placeholder"></div>
                     </div>
                     <h3 class="team-name">Jake Goble</h3>
-                    <p class="team-role">Co-Founder & Head of Technology</p>
+                    <p class="team-role">Co-Founder &amp; Head of Technology</p>
+                    <p class="team-bio">AI and automation architect building the intelligent production pipeline that powers every Madrone experience.</p>
                 </div>
             </div>
         </div>
@@ -406,7 +438,8 @@
     <!-- ========== SECTION 11: CREATIVE COLLABORATORS ========== -->
     <section class="section" id="collaborators" data-section="10">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-07.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container container--center">
             <p class="section-label">OUR CREATIVE COLLABORATORS</p>
@@ -435,7 +468,7 @@
                         </svg>
                     </div>
                     <h4 class="partner-name">GMUNK</h4>
-                    <span class="partner-category">Visual & Digital Art</span>
+                    <span class="partner-category">Visual &amp; Digital Art</span>
                     <p class="partner-desc">Internationally renowned visual artist and creative technologist.</p>
                 </div>
                 <div class="partner-card" data-reveal>
@@ -472,7 +505,7 @@
                         </svg>
                     </div>
                     <h4 class="partner-name">Nova Sky Stories</h4>
-                    <span class="partner-category">Sky & Light Shows</span>
+                    <span class="partner-category">Sky &amp; Light Shows</span>
                     <p class="partner-desc">Cutting-edge sky and light projection experiences.</p>
                 </div>
             </div>
@@ -488,7 +521,7 @@
         <div class="container">
             <p class="section-label">FLAGSHIP VENUE PARTNER</p>
             <h2 class="section-headline section-headline--large">
-                57 <em class="accent">Windward</em>
+                57 <em class="accent accent--italic">Windward</em>
             </h2>
             <div class="venue-details">
                 <div class="venue-detail" data-reveal>
@@ -501,7 +534,7 @@
                 </div>
                 <div class="venue-detail" data-reveal>
                     <span class="venue-detail-label">Formats</span>
-                    <span class="venue-detail-value">Dinners Â· Activations Â· Showcases Â· Summits</span>
+                    <span class="venue-detail-value">Dinners · Activations · Showcases · Summits</span>
                 </div>
             </div>
         </div>
@@ -510,7 +543,8 @@
     <!-- ========== SECTION 13: CAPABILITIES ========== -->
     <section class="section section--compact" id="capabilities" data-section="12">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-02.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container">
             <p class="section-label">FULL-SERVICE CAPABILITIES</p>
@@ -520,31 +554,31 @@
             <div class="capabilities-list">
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">01</span>
-                    <span class="capability-name">Cultural Strategy & AI Intelligence</span>
+                    <span class="capability-name">Cultural Strategy &amp; AI Intelligence</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">02</span>
-                    <span class="capability-name">Venue Design & Buildout</span>
+                    <span class="capability-name">Venue Design &amp; Buildout</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">03</span>
-                    <span class="capability-name">AV, Lighting & Technical Production</span>
+                    <span class="capability-name">AV, Lighting &amp; Technical Production</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">04</span>
-                    <span class="capability-name">Talent Booking & Programming</span>
+                    <span class="capability-name">Talent Booking &amp; Programming</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">05</span>
-                    <span class="capability-name">Hospitality & Guest Experience</span>
+                    <span class="capability-name">Hospitality &amp; Guest Experience</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">06</span>
-                    <span class="capability-name">Branding, Content & Social Amplification</span>
+                    <span class="capability-name">Branding, Content &amp; Social Amplification</span>
                 </div>
                 <div class="capability-item" data-reveal>
                     <span class="capability-num">07</span>
-                    <span class="capability-name">Logistics, Operations & Compliance</span>
+                    <span class="capability-name">Logistics, Operations &amp; Compliance</span>
                 </div>
             </div>
         </div>
@@ -553,7 +587,8 @@
     <!-- ========== SECTION 14: BUDGET ALLOCATION ========== -->
     <section class="section section--compact" id="budget" data-section="13">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-04.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container container--center">
             <p class="section-label">BUDGET ALLOCATION</p>
@@ -563,44 +598,44 @@
             <div class="budget-table" data-reveal>
                 <div class="budget-table-grid">
                     <div class="budget-row">
-                        <span class="budget-category">Venue & Space</span>
+                        <span class="budget-category">Venue &amp; Space</span>
                         <span class="budget-pct">30%</span>
-                        <span class="budget-range">$270K â $330K</span>
+                        <span class="budget-range">$270K — $330K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">AV & Technical Production</span>
+                        <span class="budget-category">AV &amp; Technical Production</span>
                         <span class="budget-pct">25%</span>
-                        <span class="budget-range">$225K â $275K</span>
+                        <span class="budget-range">$225K — $275K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Talent & Programming</span>
+                        <span class="budget-category">Talent &amp; Programming</span>
                         <span class="budget-pct">15%</span>
-                        <span class="budget-range">$135K â $165K</span>
+                        <span class="budget-range">$135K — $165K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Hospitality & F&B</span>
+                        <span class="budget-category">Hospitality &amp; F&amp;B</span>
                         <span class="budget-pct">10%</span>
-                        <span class="budget-range">$90K â $110K</span>
+                        <span class="budget-range">$90K — $110K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Branding & Design</span>
+                        <span class="budget-category">Branding &amp; Design</span>
                         <span class="budget-pct">8%</span>
-                        <span class="budget-range">$72K â $88K</span>
+                        <span class="budget-range">$72K — $88K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Content & Social</span>
+                        <span class="budget-category">Content &amp; Social</span>
                         <span class="budget-pct">5%</span>
-                        <span class="budget-range">$45K â $55K</span>
+                        <span class="budget-range">$45K — $55K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Logistics & Operations</span>
+                        <span class="budget-category">Logistics &amp; Operations</span>
                         <span class="budget-pct">4%</span>
-                        <span class="budget-range">$36K â $44K</span>
+                        <span class="budget-range">$36K — $44K</span>
                     </div>
                     <div class="budget-row">
-                        <span class="budget-category">Strategy & Management</span>
+                        <span class="budget-category">Strategy &amp; Management</span>
                         <span class="budget-pct">3%</span>
-                        <span class="budget-range">$27K â $33K</span>
+                        <span class="budget-range">$27K — $33K</span>
                     </div>
                 </div>
             </div>
@@ -610,24 +645,25 @@
     <!-- ========== SECTION 15: ENGAGEMENT STRUCTURE ========== -->
     <section class="section" id="engagement" data-section="14">
         <div class="section-bg">
-            <div class="bg-gradient bg-gradient--dark"></div>
+            <img src="assets/images/bg/bg-05.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
         </div>
         <div class="container container--center">
-            <p class="section-label">ENGAGEMENT STRUCTURE & INVITATION</p>
+            <p class="section-label">ENGAGEMENT STRUCTURE &amp; INVITATION</p>
             <h2 class="section-headline">
-                Project-Based or <em class="accent">Annual</em>
+                Project-Based or <em class="accent accent--italic">Annual</em>
             </h2>
             <div class="engagement-options">
                 <div class="engagement-card" data-reveal>
                     <span class="engagement-tag">Option A</span>
                     <h3 class="engagement-title">Project-Based</h3>
-                    <p class="engagement-text">Single flagship experience. Full strategy-to-execution delivery. Ideal for brands testing the experiential waters.</p>
+                    <p class="engagement-text">Single flagship experience. Full strategy-to-execution delivery. Ideal for brands testing the experiential waters or launching a marquee moment.</p>
                     <p class="engagement-price">$1M per activation</p>
                 </div>
                 <div class="engagement-card engagement-card--featured" data-reveal>
                     <span class="engagement-tag engagement-tag--accent">Recommended</span>
                     <h3 class="engagement-title">Annual Partnership</h3>
-                    <p class="engagement-text">4+ experiences per year. Dedicated creative team. Cultural intelligence reports. Priority venue access. Full-year strategic roadmap.</p>
+                    <p class="engagement-text">4+ experiences per year. Dedicated creative team. Weekly cultural intelligence reports. Priority venue access. Full-year strategic roadmap.</p>
                     <p class="engagement-price">Starting at $1M / Year</p>
                 </div>
             </div>
@@ -644,13 +680,13 @@
         </div>
         <div class="container container--center">
             <div class="contact-content">
-                <svg class="contact-icon" viewBox="0 0 60 60" width="60" height="60">
+                <svg class="contact-icon" viewBox="0 0 60 60" width="60" height="60" aria-hidden="true">
                     <circle cx="15" cy="15" r="5" fill="#e1a377"/>
                     <circle cx="45" cy="15" r="5" fill="#e1a377"/>
                     <circle cx="15" cy="45" r="5" fill="#e1a377"/>
                     <circle cx="45" cy="45" r="5" fill="#e1a377"/>
                 </svg>
-                <h2 class="contact-headline">Let's Build Something<br><em class="accent">Unforgettable</em></h2>
+                <h2 class="contact-headline">Let's Build Something<br><em class="accent accent--italic">Unforgettable</em></h2>
                 <div class="contact-details">
                     <div class="contact-grid">
                         <div class="contact-item">
@@ -672,12 +708,15 @@
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </a>
             </div>
-            <div class="footer-bar">
-                <span>MADRONE STUDIOS</span>
-                <span>Proprietary & Confidential</span>
-            </div>
         </div>
     </section>
+
+    </main>
+
+    <footer class="footer-bar">
+        <span>MADRONE STUDIOS</span>
+        <span>Proprietary &amp; Confidential</span>
+    </footer>
 
     <script src="main.js"></script>
 </body>
