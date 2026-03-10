@@ -1,6 +1,6 @@
 /* ============================================
    MADRONE STUDIOS — Scroll Animations & Interactions
-   v2.0 — Full audit fix pass
+   v3.0 — fromTo fix for hidden-tab resilience
    ============================================ */
 
 (function() {
@@ -181,41 +181,50 @@
         }
     }, { passive: true });
 
+    // ---------- Helper: scroll-triggered fromTo ----------
+    // Using fromTo instead of from ensures the end state (opacity:1, transforms:none)
+    // is explicit and cannot be corrupted by ticker freezes in hidden tabs.
+    function scrollReveal(targets, triggerEl, fromVars, toVars, scrollOpts) {
+        var defaults = { opacity: 1, y: 0, x: 0, scale: 1, rotation: 0 };
+        var to = Object.assign({}, defaults, toVars || {}, {
+            scrollTrigger: Object.assign({
+                trigger: triggerEl,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }, scrollOpts || {})
+        });
+        return gsap.fromTo(targets, fromVars, to);
+    }
+
     // ---------- Main Animations ----------
     function initAnimations() {
-        // Hero entrance
+        // Hero entrance — timeline (not scroll-triggered, plays immediately)
         const heroTl = gsap.timeline();
         heroTl
-            .from('.hero-eyebrow', {
-                opacity: 0,
-                y: 20,
-                duration: 1,
-                ease: 'power3.out'
-            })
-            .from('.title-line', {
-                opacity: 0,
-                y: 40,
-                duration: 1.2,
-                stagger: 0.15,
-                ease: 'power3.out'
-            }, '-=0.6')
-            .from('.hero-subtitle', {
-                opacity: 0,
-                y: 20,
-                duration: 0.8,
-                ease: 'power3.out'
-            }, '-=0.4')
-            .from('.hero-line', {
-                scaleX: 0,
-                duration: 0.8,
-                ease: 'power2.inOut'
-            }, '-=0.3')
-            .from('.scroll-indicator', {
-                opacity: 0,
-                y: 20,
-                duration: 0.6,
-                ease: 'power2.out'
-            }, '-=0.2');
+            .fromTo('.hero-eyebrow',
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+            )
+            .fromTo('.title-line',
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: 'power3.out' },
+                '-=0.6'
+            )
+            .fromTo('.hero-subtitle',
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+                '-=0.4'
+            )
+            .fromTo('.hero-line',
+                { scaleX: 0 },
+                { scaleX: 1, duration: 0.8, ease: 'power2.inOut' },
+                '-=0.3'
+            )
+            .fromTo('.scroll-indicator',
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+                '-=0.2'
+            );
 
         // Safety: if GSAP ticker freezes, ensure hero content is visible after 3s
         setTimeout(function() {
@@ -229,130 +238,44 @@
 
         // Section labels — scroll triggered
         document.querySelectorAll('.section-label').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 15,
-                duration: 0.8,
-                ease: 'power3.out'
-            });
+            scrollReveal(el, el, { opacity: 0, y: 15 }, { duration: 0.8 }, { start: 'top 88%' });
         });
 
         document.querySelectorAll('.section-headline').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 30,
-                duration: 1,
-                ease: 'power3.out'
-            });
+            scrollReveal(el, el, { opacity: 0, y: 30 }, { duration: 1 }, { start: 'top 88%' });
         });
 
         document.querySelectorAll('.section-body').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 20,
-                duration: 0.8,
-                delay: 0.15,
-                ease: 'power3.out'
-            });
+            scrollReveal(el, el, { opacity: 0, y: 20 }, { duration: 0.8, delay: 0.15 }, { start: 'top 88%' });
         });
 
         // Reveal elements
         document.querySelectorAll('[data-reveal]').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 90%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 30,
-                duration: 0.9,
-                ease: 'power3.out'
-            });
+            scrollReveal(el, el, { opacity: 0, y: 30 }, { duration: 0.9 }, { start: 'top 90%' });
         });
 
         // Glass cards stagger
         document.querySelectorAll('.cards-grid').forEach(grid => {
             const cards = grid.querySelectorAll('.glass-card');
-            gsap.from(cards, {
-                scrollTrigger: {
-                    trigger: grid,
-                    start: 'top 82%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: 'power3.out'
-            });
+            scrollReveal(cards, grid, { opacity: 0, y: 40 }, { duration: 0.8, stagger: 0.15 }, { start: 'top 82%' });
         });
 
         // Pillar cards stagger
         const pillarCards = document.querySelectorAll('.pillar-card');
         if (pillarCards.length) {
-            gsap.from(pillarCards, {
-                scrollTrigger: {
-                    trigger: '.pillars-grid',
-                    start: 'top 82%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.9,
-                stagger: 0.2,
-                ease: 'power3.out'
-            });
+            scrollReveal(pillarCards, '.pillars-grid', { opacity: 0, y: 40 }, { duration: 0.9, stagger: 0.2 }, { start: 'top 82%' });
         }
 
         // Service pills stagger
         const pills = document.querySelectorAll('.service-pill');
         if (pills.length) {
-            gsap.from(pills, {
-                scrollTrigger: {
-                    trigger: '.service-pillars',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 20,
-                scale: 0.9,
-                duration: 0.6,
-                stagger: 0.08,
-                ease: 'back.out(1.7)'
-            });
+            scrollReveal(pills, '.service-pillars', { opacity: 0, y: 20, scale: 0.9 }, { duration: 0.6, stagger: 0.08, ease: 'back.out(1.7)' });
         }
 
         // Capability items stagger
         const capItems = document.querySelectorAll('.capability-item');
         if (capItems.length) {
-            gsap.from(capItems, {
-                scrollTrigger: {
-                    trigger: '.capabilities-list',
-                    start: 'top 82%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                x: -30,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
+            scrollReveal(capItems, '.capabilities-list', { opacity: 0, x: -30 }, { duration: 0.7, stagger: 0.1 }, { start: 'top 82%' });
         }
 
         // ---------- Animated Counters ----------
@@ -402,18 +325,7 @@
         // ---------- Budget Table Rows ----------
         const budgetRows = document.querySelectorAll('.budget-row');
         if (budgetRows.length) {
-            gsap.from(budgetRows, {
-                scrollTrigger: {
-                    trigger: '.budget-table',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                x: -20,
-                duration: 0.6,
-                stagger: 0.08,
-                ease: 'power3.out'
-            });
+            scrollReveal(budgetRows, '.budget-table', { opacity: 0, x: -20 }, { duration: 0.6, stagger: 0.08 });
         }
 
         // ---------- Background Parallax ----------
@@ -434,153 +346,55 @@
         // ---------- CTA Button ----------
         const ctaButton = document.querySelector('.cta-button');
         if (ctaButton) {
-            gsap.from(ctaButton, {
-                scrollTrigger: {
-                    trigger: ctaButton,
-                    start: 'top 92%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 20,
-                scale: 0.95,
-                duration: 0.8,
-                ease: 'back.out(1.5)'
-            });
+            scrollReveal(ctaButton, ctaButton, { opacity: 0, y: 20, scale: 0.95 }, { duration: 0.8, ease: 'back.out(1.5)' }, { start: 'top 92%' });
         }
 
         // ---------- Engagement cards ----------
         const engCards = document.querySelectorAll('.engagement-card');
         if (engCards.length) {
-            gsap.from(engCards, {
-                scrollTrigger: {
-                    trigger: '.engagement-options',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.9,
-                stagger: 0.2,
-                ease: 'power3.out'
-            });
+            scrollReveal(engCards, '.engagement-options', { opacity: 0, y: 40 }, { duration: 0.9, stagger: 0.2 });
         }
 
         // ---------- Venue details stagger ----------
         const venueDetails = document.querySelectorAll('.venue-detail');
         if (venueDetails.length) {
-            gsap.from(venueDetails, {
-                scrollTrigger: {
-                    trigger: '.venue-details',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 25,
-                duration: 0.7,
-                stagger: 0.15,
-                ease: 'power3.out'
-            });
+            scrollReveal(venueDetails, '.venue-details', { opacity: 0, y: 25 }, { duration: 0.7, stagger: 0.15 });
         }
 
         // ---------- Case studies ----------
         const caseCards = document.querySelectorAll('.case-card');
         if (caseCards.length) {
-            gsap.from(caseCards, {
-                scrollTrigger: {
-                    trigger: '.case-studies-grid',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 40,
-                duration: 0.9,
-                stagger: 0.2,
-                ease: 'power3.out'
-            });
+            scrollReveal(caseCards, '.case-studies-grid', { opacity: 0, y: 40 }, { duration: 0.9, stagger: 0.2 });
         }
 
         // ---------- Partner cards ----------
         const partnerCards = document.querySelectorAll('.partner-card');
         if (partnerCards.length) {
-            gsap.from(partnerCards, {
-                scrollTrigger: {
-                    trigger: '.partners-grid',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 25,
-                scale: 0.95,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'power3.out'
-            });
+            scrollReveal(partnerCards, '.partners-grid', { opacity: 0, y: 25, scale: 0.95 }, { duration: 0.7, stagger: 0.1 });
         }
 
         // ---------- Team cards ----------
         const teamCards = document.querySelectorAll('.team-card');
         if (teamCards.length) {
-            gsap.from(teamCards, {
-                scrollTrigger: {
-                    trigger: '.team-grid',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: 'power3.out'
-            });
+            scrollReveal(teamCards, '.team-grid', { opacity: 0, y: 30 }, { duration: 0.8, stagger: 0.2 });
         }
 
         // ---------- Footer bar ----------
         const footerBar = document.querySelector('.footer-bar');
         if (footerBar) {
-            gsap.from(footerBar, {
-                scrollTrigger: {
-                    trigger: footerBar,
-                    start: 'top 95%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                duration: 1,
-                ease: 'power2.out'
-            });
+            scrollReveal(footerBar, footerBar, { opacity: 0 }, { duration: 1, ease: 'power2.out' }, { start: 'top 95%' });
         }
 
         // ---------- Contact section icon spin ----------
         const contactIcon = document.querySelector('.contact-icon');
         if (contactIcon) {
-            gsap.from(contactIcon, {
-                scrollTrigger: {
-                    trigger: contactIcon,
-                    start: 'top 90%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                rotation: -90,
-                scale: 0.5,
-                duration: 1.2,
-                ease: 'back.out(1.5)'
-            });
+            scrollReveal(contactIcon, contactIcon, { opacity: 0, rotation: -90, scale: 0.5 }, { duration: 1.2, ease: 'back.out(1.5)' }, { start: 'top 90%' });
         }
 
         // ---------- Contact details ----------
         const contactItems = document.querySelectorAll('.contact-item');
         if (contactItems.length) {
-            gsap.from(contactItems, {
-                scrollTrigger: {
-                    trigger: '.contact-grid',
-                    start: 'top 90%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 15,
-                duration: 0.6,
-                stagger: 0.12,
-                ease: 'power3.out'
-            });
+            scrollReveal(contactItems, '.contact-grid', { opacity: 0, y: 15 }, { duration: 0.6, stagger: 0.12 }, { start: 'top 90%' });
         }
     }
 
@@ -596,18 +410,34 @@
     });
 
     // ---------- Global visibility safety net ----------
-    // If GSAP ticker freezes (hidden tab, power saving, etc), gsap.from()
-    // leaves elements at opacity:0 permanently. This forces everything visible
-    // after 8 seconds as an absolute last resort.
-    setTimeout(function() {
-        var stuck = document.querySelectorAll('.section-label, .section-headline, .section-body, [data-reveal], .glass-card, .pillar-card, .service-pill, .capability-item, .budget-row, .case-card, .partner-card, .team-card, .engagement-card, .venue-detail, .contact-item, .cta-button, .footer-bar, .contact-icon');
+    // Repeating check: if any animated element is stuck at opacity:0,
+    // force it visible. Runs at 5s, 10s, and 20s to catch all timing edge cases
+    // (ScrollTrigger may fire AFTER the first safety-net pass).
+    var safetySelectors = '.section-label, .section-headline, .section-body, [data-reveal], .glass-card, .pillar-card, .service-pill, .capability-item, .budget-row, .case-card, .partner-card, .team-card, .engagement-card, .venue-detail, .contact-item, .cta-button, .footer-bar, .contact-icon';
+
+    function runSafetyNet() {
+        var stuck = document.querySelectorAll(safetySelectors);
         stuck.forEach(function(el) {
             var op = getComputedStyle(el).opacity;
             if (op === '0' || parseFloat(op) < 0.1) {
                 el.style.opacity = '1';
                 el.style.transform = 'none';
+                el.style.visibility = 'visible';
             }
         });
-    }, 8000);
+    }
+
+    // Run at 5s, 10s, and 20s after page load
+    setTimeout(runSafetyNet, 5000);
+    setTimeout(runSafetyNet, 10000);
+    setTimeout(runSafetyNet, 20000);
+
+    // Also run when tab becomes visible (user switches back to tab)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            setTimeout(runSafetyNet, 500);
+            setTimeout(runSafetyNet, 2000);
+        }
+    });
 
 })();
