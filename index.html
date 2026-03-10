@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madrone Studios — The Architects of Culture</title>
+    <meta name="description" content="Madrone Studios creates cultural moments that move brands. AI-native, culturally fluent brand partnership experiences.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Urbanist:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-dots">
+                <span></span><span></span><span></span><span></span>
+            </div>
+            <p class="preloader-text">MADRONE STUDIOS</p>
+        </div>
+    </div>
+
+    <!-- Grain overlay -->
+    <div class="grain-overlay"></div>
+
+    <!-- Cursor glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="mainNav">
+        <div class="nav-logo">
+            <svg class="nav-icon" viewBox="0 0 40 40" width="32" height="32">
+                <circle cx="10" cy="10" r="4" fill="#e1a377"/>
+                <circle cx="30" cy="10" r="4" fill="#e1a377"/>
+                <circle cx="10" cy="30" r="4" fill="#e1a377"/>
+                <circle cx="30" cy="30" r="4" fill="#e1a377"/>
+            </svg>
+            <span class="nav-wordmark">MADRONE STUDIOS</span>
+        </div>
+        <div class="nav-dots" id="navDots"></div>
+        <a href="#contact" class="nav-cta">Start a Conversation</a>
+    </nav>
+
+    <!-- ========== SECTION 1: HERO ========== -->
+    <section class="section hero" id="hero" data-section="0">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-01.jpg" alt="" loading="eager" class="bg-image">
+            <div class="bg-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">MADRONE STUDIOS</p>
+            <h1 class="hero-title">
+                <span class="title-line">The Architects</span>
+                <span class="title-line">of <em class="accent">Culture</em></span>
+            </h1>
+            <p class="hero-subtitle">Brand Partnership Experiences</p>
+            <div class="hero-line"></div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 2: THE BIG IDEA ========== -->
+    <section class="section" id="bigIdea" data-section="1">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-02.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">THE BIG IDEA</p>
+            <h2 class="section-headline">
+                Creating <em class="accent">Cultural Moments</em><br>
+                That Move Brands Forward
+            </h2>
+            <p class="section-body">
+                We don't run campaigns. We create immersive, AI-powered cultural experiences
+                that put brands at the center of moments people never forget.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 3: OUR EDGE ========== -->
+    <section class="section" id="ourEdge" data-section="2">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">OUR EDGE</p>
+            <h2 class="section-headline">
+                AI-Native.<br><em class="accent">Culturally Fluent.</em>
+            </h2>
+            <div class="cards-grid cards-grid--3">
+                <div class="glass-card" data-reveal>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="20" stroke="#e1a377" stroke-width="1.5" fill="none"/><path d="M16 24h16M24 16v16" stroke="#e1a377" stroke-width="1.5"/></svg>
+                    </div>
+                    <h3 class="card-title">Cultural Intelligence</h3>
+                    <p class="card-text">AI-powered trend analysis identifies the right moments, audiences, and creative angles before your competitors even see them.</p>
+                </div>
+                <div class="glass-card" data-reveal>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#e1a377" stroke-width="1.5" fill="none"/><path d="M16 24l6 6 10-12" stroke="#e1a377" stroke-width="1.5" fill="none"/></svg>
+                    </div>
+                    <h3 class="card-title">Audience Matching</h3>
+                    <p class="card-text">Proprietary algorithms match brands with culturally aligned audiences, creators, and venues for maximum resonance.</p>
+                </div>
+                <div class="glass-card" data-reveal>
+                    <div class="card-icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="8" stroke="#e1a377" stroke-width="1.5" fill="none"/><circle cx="24" cy="24" r="16" stroke="#e1a377" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/></svg>
+                    </div>
+                    <h3 class="card-title">Impact Tracking</h3>
+                    <p class="card-text">Real-time sentiment analysis, engagement tracking, and ROI dashboards give you visibility from concept to post-event reporting.</p>
+                </div>
+            </div>
+            <div class="stats-bar">
+                <div class="stat" data-reveal>
+                    <span class="stat-number" data-count="500">0</span><span class="stat-suffix">+</span>
+                    <span class="stat-label">Events Produced</span>
+                </div>
+                <div class="stat" data-reveal>
+                    <span class="stat-number" data-count="10">0</span><span class="stat-suffix">+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat" data-reveal>
+                    <span class="stat-number accent">Weekly</span>
+                    <span class="stat-label">AI Trend Reports</span>
+                </div>
+                <div class="stat" data-reveal>
+                    <span class="stat-number accent">AI-First</span>
+                    <span class="stat-label">Production Pipeline</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 4: WHY THIS MATTERS NOW ========== -->
+    <section class="section" id="whyNow" data-section="3">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-04.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">WHY THIS MATTERS NOW</p>
+            <h2 class="section-headline">
+                The Shift From Campaigns<br>to <em class="accent">Experiences</em>
+            </h2>
+            <div class="split-layout">
+                <div class="split-left">
+                    <p class="section-body">
+                        Consumers don't want to be marketed to — they want to be part of something.
+                        The brands winning right now are the ones showing up in culture, not just advertising around it.
+                    </p>
+                </div>
+                <div class="split-right">
+                    <div class="stat-card" data-reveal>
+                        <span class="stat-card-number" data-count="91">0</span><span class="stat-card-suffix">%</span>
+                        <span class="stat-card-label">of consumers prefer brands that provide experiences over traditional ads</span>
+                    </div>
+                    <div class="stat-card" data-reveal>
+                        <span class="stat-card-number">4.2</span><span class="stat-card-suffix">x</span>
+                        <span class="stat-card-label">higher brand recall from experiential vs. digital campaigns</span>
+                    </div>
+                    <div class="stat-card" data-reveal>
+                        <span class="stat-card-number accent">$1.4T</span>
+                        <span class="stat-card-label">projected experience economy by 2028</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 5: OUR MODEL INTRO ========== -->
+    <section class="section" id="modelIntro" data-section="4">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-05.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">OUR MODEL</p>
+            <h2 class="section-headline section-headline--large">
+                One Partner.<br>One Vision.<br><em class="accent">Total Execution.</em>
+            </h2>
+            <p class="section-body section-body--centered">
+                No agency layers. No vendor chaos. One creative team that handles
+                strategy, production, and amplification under one roof.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 6: OUR MODEL PILLARS ========== -->
+    <section class="section" id="modelPillars" data-section="5">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container">
+            <div class="pillars-grid">
+                <div class="pillar-card" data-reveal>
+                    <span class="pillar-number">01</span>
+                    <h3 class="pillar-title">Strategy</h3>
+                    <p class="pillar-text">Cultural research, audience mapping, brand alignment, concept development, and AI-powered trend intelligence.</p>
+                    <div class="pillar-line"></div>
+                </div>
+                <div class="pillar-card" data-reveal>
+                    <span class="pillar-number">02</span>
+                    <h3 class="pillar-title">Production</h3>
+                    <p class="pillar-text">Venue design, AV, lighting, talent booking, hospitality, branding, and full event build-out from concept to completion.</p>
+                    <div class="pillar-line"></div>
+                </div>
+                <div class="pillar-card" data-reveal>
+                    <span class="pillar-number">03</span>
+                    <h3 class="pillar-title">Amplification</h3>
+                    <p class="pillar-text">Content capture, social strategy, influencer seeding, post-event reporting, and ongoing cultural storytelling.</p>
+                    <div class="pillar-line"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 7: ENGAGEMENT FRAMEWORK ========== -->
+    <section class="section" id="framework" data-section="6">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--subtle"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">$1M+ ENGAGEMENT FRAMEWORK</p>
+            <h2 class="section-headline">
+                Integrated <em class="accent">Experiences</em>,<br>Not Line Items
+            </h2>
+            <div class="service-pillars">
+                <div class="service-pill" data-reveal>Venue & Space</div>
+                <div class="service-pill" data-reveal>AV & Production</div>
+                <div class="service-pill" data-reveal>Hospitality</div>
+                <div class="service-pill" data-reveal>Branding & Design</div>
+                <div class="service-pill" data-reveal>Talent & Programming</div>
+                <div class="service-pill" data-reveal>Logistics & Ops</div>
+                <div class="service-pill" data-reveal>Content & Reach</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 8: CAPACITY BY DESIGN ========== -->
+    <section class="section" id="capacity" data-section="7">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-08.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">CAPACITY BY DESIGN</p>
+            <h2 class="section-headline">
+                Only Four Flagship Partners<br><em class="accent">Per Year</em>
+            </h2>
+            <div class="capacity-stats">
+                <div class="capacity-stat" data-reveal>
+                    <span class="capacity-number" data-count="4">0</span>
+                    <span class="capacity-label">Flagship Partners<br>Per Year</span>
+                </div>
+                <div class="capacity-stat" data-reveal>
+                    <span class="capacity-number" data-count="1">0</span>
+                    <span class="capacity-label">Dedicated Team<br>Per Partner</span>
+                </div>
+                <div class="capacity-stat" data-reveal>
+                    <span class="capacity-number" data-count="100">0</span><span class="capacity-suffix">%</span>
+                    <span class="capacity-label">Creative Focus<br>& Commitment</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 9: CASE STUDIES ========== -->
+    <section class="section" id="caseStudies" data-section="8">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-09.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">CASE STUDIES</p>
+            <h2 class="section-headline">
+                Integrated Experiences Built for<br><em class="accent">Cultural Impact</em>
+            </h2>
+            <div class="case-studies-grid">
+                <div class="case-card" data-reveal>
+                    <div class="case-card-inner">
+                        <h3 class="case-title">Immersive Brand Activations</h3>
+                        <div class="case-stats">
+                            <div class="case-stat">
+                                <span class="case-stat-number">2.3M+</span>
+                                <span class="case-stat-label">Social impressions</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-number">85%</span>
+                                <span class="case-stat-label">Brand recall</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-card" data-reveal>
+                    <div class="case-card-inner">
+                        <h3 class="case-title">Cultural Festival Partnerships</h3>
+                        <div class="case-stats">
+                            <div class="case-stat">
+                                <span class="case-stat-number">$3.2M</span>
+                                <span class="case-stat-label">Generated value</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-number">50K+</span>
+                                <span class="case-stat-label">Live attendees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 10: LEADERSHIP ========== -->
+    <section class="section" id="leadership" data-section="9">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">LEADERSHIP</p>
+            <h2 class="section-headline">
+                The Team Behind the <em class="accent">Vision</em>
+            </h2>
+            <div class="team-grid">
+                <div class="team-card" data-reveal>
+                    <div class="team-image-wrap">
+                        <div class="team-image-placeholder"></div>
+                    </div>
+                    <h3 class="team-name">Jon Rowe</h3>
+                    <p class="team-role">Co-Founder & Creative Director</p>
+                </div>
+                <div class="team-card" data-reveal>
+                    <div class="team-image-wrap">
+                        <div class="team-image-placeholder"></div>
+                    </div>
+                    <h3 class="team-name">Jake Goble</h3>
+                    <p class="team-role">Co-Founder & Head of Technology</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 11: CREATIVE COLLABORATORS ========== -->
+    <section class="section" id="collaborators" data-section="10">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">OUR CREATIVE COLLABORATORS</p>
+            <h2 class="section-headline">
+                Top-Tier <em class="accent">Production Partners</em>
+            </h2>
+            <div class="partners-grid">
+                <div class="partner-card" data-reveal>
+                    <img src="assets/images/partners/partner-1.jpg" alt="Partner" class="partner-logo" loading="lazy">
+                </div>
+                <div class="partner-card" data-reveal>
+                    <img src="assets/images/partners/partner-2.jpg" alt="Partner" class="partner-logo" loading="lazy">
+                </div>
+                <div class="partner-card" data-reveal>
+                    <img src="assets/images/partners/partner-3.jpg" alt="Partner" class="partner-logo" loading="lazy">
+                </div>
+                <div class="partner-card" data-reveal>
+                    <img src="assets/images/partners/partner-4.jpg" alt="Partner" class="partner-logo" loading="lazy">
+                </div>
+            </div>
+            <p class="section-body section-body--centered section-body--muted">
+                Do LaB · GMUNK · Minds Over Matter · Drone Stories · Nova Sky Stories
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 12: FLAGSHIP VENUE ========== -->
+    <section class="section" id="venue" data-section="11">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-12.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--medium"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">FLAGSHIP VENUE PARTNER</p>
+            <h2 class="section-headline section-headline--large">
+                57 <em class="accent">Windward</em>
+            </h2>
+            <div class="venue-details">
+                <div class="venue-detail" data-reveal>
+                    <span class="venue-detail-label">Location</span>
+                    <span class="venue-detail-value">Venice Beach, Los Angeles</span>
+                </div>
+                <div class="venue-detail" data-reveal>
+                    <span class="venue-detail-label">Capacity</span>
+                    <span class="venue-detail-value">Up to 500 guests</span>
+                </div>
+                <div class="venue-detail" data-reveal>
+                    <span class="venue-detail-label">Formats</span>
+                    <span class="venue-detail-value">Dinners · Activations · Showcases · Summits</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 13: CAPABILITIES ========== -->
+    <section class="section" id="capabilities" data-section="12">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container">
+            <p class="section-label">FULL-SERVICE CAPABILITIES</p>
+            <h2 class="section-headline">
+                Seven <em class="accent">Pillars</em>
+            </h2>
+            <div class="capabilities-list">
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">01</span>
+                    <span class="capability-name">Cultural Strategy & AI Intelligence</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">02</span>
+                    <span class="capability-name">Venue Design & Buildout</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">03</span>
+                    <span class="capability-name">AV, Lighting & Technical Production</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">04</span>
+                    <span class="capability-name">Talent Booking & Programming</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">05</span>
+                    <span class="capability-name">Hospitality & Guest Experience</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">06</span>
+                    <span class="capability-name">Branding, Content & Social Amplification</span>
+                </div>
+                <div class="capability-item" data-reveal>
+                    <span class="capability-num">07</span>
+                    <span class="capability-name">Logistics, Operations & Compliance</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 14: BUDGET ALLOCATION ========== -->
+    <section class="section" id="budget" data-section="13">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">BUDGET ALLOCATION</p>
+            <h2 class="section-headline">
+                $1M Integrated <em class="accent">Experience</em>
+            </h2>
+            <div class="budget-chart">
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="30" style="--bar-color: #e1a377">
+                        <span class="budget-label">Venue & Production</span>
+                        <span class="budget-pct">30%</span>
+                    </div>
+                </div>
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="25" style="--bar-color: #c98a5a">
+                        <span class="budget-label">AV & Technical</span>
+                        <span class="budget-pct">25%</span>
+                    </div>
+                </div>
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="15" style="--bar-color: #b07a4d">
+                        <span class="budget-label">Talent & Programming</span>
+                        <span class="budget-pct">15%</span>
+                    </div>
+                </div>
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="12" style="--bar-color: #976a40">
+                        <span class="budget-label">Hospitality</span>
+                        <span class="budget-pct">12%</span>
+                    </div>
+                </div>
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="10" style="--bar-color: #7e5a33">
+                        <span class="budget-label">Content & Social</span>
+                        <span class="budget-pct">10%</span>
+                    </div>
+                </div>
+                <div class="budget-bar" data-reveal>
+                    <div class="budget-fill" data-width="8" style="--bar-color: #654a26">
+                        <span class="budget-label">Strategy & Management</span>
+                        <span class="budget-pct">8%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 15: ENGAGEMENT STRUCTURE ========== -->
+    <section class="section" id="engagement" data-section="14">
+        <div class="section-bg">
+            <div class="bg-gradient bg-gradient--dark"></div>
+        </div>
+        <div class="container container--center">
+            <p class="section-label">ENGAGEMENT STRUCTURE & INVITATION</p>
+            <h2 class="section-headline">
+                Project-Based or <em class="accent">Annual</em>
+            </h2>
+            <div class="engagement-options">
+                <div class="engagement-card" data-reveal>
+                    <span class="engagement-tag">Option A</span>
+                    <h3 class="engagement-title">Project-Based</h3>
+                    <p class="engagement-text">Single flagship experience. Full strategy-to-execution delivery. Ideal for brands testing the experiential waters.</p>
+                    <p class="engagement-price">Starting at $250K</p>
+                </div>
+                <div class="engagement-card engagement-card--featured" data-reveal>
+                    <span class="engagement-tag engagement-tag--accent">Recommended</span>
+                    <h3 class="engagement-title">Annual Partnership</h3>
+                    <p class="engagement-text">4+ experiences per year. Dedicated creative team. Cultural intelligence reports. Priority venue access. Full-year strategic roadmap.</p>
+                    <p class="engagement-price">Starting at $1M / Year</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 16: CONTACT ========== -->
+    <section class="section section--last" id="contact" data-section="15">
+        <div class="section-bg">
+            <img src="assets/images/bg/bg-16.jpg" alt="" loading="lazy" class="bg-image">
+            <div class="bg-overlay bg-overlay--heavy"></div>
+        </div>
+        <div class="container container--center">
+            <div class="contact-content">
+                <svg class="contact-icon" viewBox="0 0 60 60" width="60" height="60">
+                    <circle cx="15" cy="15" r="5" fill="#e1a377"/>
+                    <circle cx="45" cy="15" r="5" fill="#e1a377"/>
+                    <circle cx="15" cy="45" r="5" fill="#e1a377"/>
+                    <circle cx="45" cy="45" r="5" fill="#e1a377"/>
+                </svg>
+                <h2 class="contact-headline">Let's Build Something<br><em class="accent">Unforgettable</em></h2>
+                <div class="contact-details">
+                    <p>MADRONE STUDIOS</p>
+                    <p class="accent">partnerships@madronestudios.com</p>
+                </div>
+                <a href="mailto:partnerships@madronestudios.com" class="cta-button">
+                    <span>Start a Conversation</span>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="footer-bar">
+                <span>MADRONE STUDIOS</span>
+                <span>Proprietary & Confidential</span>
+            </div>
+        </div>
+    </section>
+
+    <script src="main.js"></script>
+</body>
+</html>
