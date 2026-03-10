@@ -9,6 +9,9 @@
     // Ensure GSAP is available
     if (typeof gsap === 'undefined') {
         console.warn('GSAP not loaded');
+        // Even without GSAP, hide preloader via CSS class
+        var pl = document.getElementById('preloader');
+        if (pl) setTimeout(function() { pl.classList.add('is-hidden'); }, 2000);
         return;
     }
 
@@ -18,37 +21,72 @@
     const preloader = document.getElementById('preloader');
     let animationsInitialized = false;
 
+    function finishPreloaderDismiss() {
+        if (preloader) {
+            preloader.classList.add('is-hidden');
+            preloader.style.display = 'none';
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            preloader.style.pointerEvents = 'none';
+        }
+        if (!animationsInitialized) {
+            animationsInitialized = true;
+            try {
+                initAnimations();
+                ScrollTrigger.refresh();
+            } catch(e) {
+                console.warn('Animation init error:', e);
+            }
+        }
+    }
+
     function dismissPreloader() {
         if (animationsInitialized) return;
-        animationsInitialized = true;
 
-        gsap.to(preloader, {
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power2.inOut',
-            onComplete: () => {
-                preloader.classList.add('is-hidden');
-                preloader.style.display = 'none';
-                // Small delay to let layout settle
-                requestAnimationFrame(() => {
-                    initAnimations();
-                    ScrollTrigger.refresh();
-                });
+        // Try GSAP first (smoothest)
+        try {
+            gsap.to(preloader, {
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.inOut',
+                onComplete: finishPreloaderDismiss
+            });
+        } catch(e) {
+            // GSAP failed — use CSS class
+            finishPreloaderDismiss();
+        }
+
+        // Safety: if GSAP ticker freezes (hidden tab, power saving, etc),
+        // force-complete after 1.5s using pure JS
+        setTimeout(function() {
+            if (preloader && getComputedStyle(preloader).opacity !== '0') {
+                preloader.style.transition = 'opacity 0.5s ease';
+                preloader.style.opacity = '0';
+                setTimeout(finishPreloaderDismiss, 600);
             }
-        });
+        }, 1500);
     }
 
     // Strategy: fire on whichever comes first — load event or DOM ready + timeout
     if (document.readyState === 'complete') {
-        // Page already fully loaded
         setTimeout(dismissPreloader, 400);
     } else {
-        window.addEventListener('load', () => {
+        window.addEventListener('load', function() {
             setTimeout(dismissPreloader, 400);
         });
         // Hard fallback: if nothing fires within 3 seconds, dismiss anyway
         setTimeout(dismissPreloader, 3000);
     }
+
+    // Ultimate nuclear fallback: pure JS, no GSAP, no rAF dependency
+    // If preloader is STILL showing after 5 seconds, force kill it
+    setTimeout(function() {
+        if (preloader && !preloader.classList.contains('is-hidden')) {
+            preloader.style.transition = 'opacity 0.3s ease';
+            preloader.style.opacity = '0';
+            setTimeout(finishPreloaderDismiss, 400);
+        }
+    }, 5000);
 
     // ---------- Cursor Glow ----------
     const cursorGlow = document.getElementById('cursorGlow');
@@ -178,6 +216,16 @@
                 duration: 0.6,
                 ease: 'power2.out'
             }, '-=0.2');
+
+        // Safety: if GSAP ticker freezes, ensure hero content is visible after 3s
+        setTimeout(function() {
+            document.querySelectorAll('.hero-eyebrow, .title-line, .hero-subtitle, .hero-line, .scroll-indicator').forEach(function(el) {
+                if (getComputedStyle(el).opacity === '0') {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                }
+            });
+        }, 3000);
 
         // Section labels — scroll triggered
         document.querySelectorAll('.section-label').forEach(el => {
@@ -546,5 +594,20 @@
             }
         });
     });
+
+    // ---------- Global visibility safety net ----------
+    // If GSAP ticker freezes (hidden tab, power saving, etc), gsap.from()
+    // leaves elements at opacity:0 permanently. This forces everything visible
+    // after 8 seconds as an absolute last resort.
+    setTimeout(function() {
+        var stuck = document.querySelectorAll('.section-label, .section-headline, .section-body, [data-reveal], .glass-card, .pillar-card, .service-pill, .capability-item, .budget-row, .case-card, .partner-card, .team-card, .engagement-card, .venue-detail, .contact-item, .cta-button, .footer-bar, .contact-icon');
+        stuck.forEach(function(el) {
+            var op = getComputedStyle(el).opacity;
+            if (op === '0' || parseFloat(op) < 0.1) {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            }
+        });
+    }, 8000);
 
 })();

@@ -85,13 +85,19 @@ em {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.8s var(--ease-smooth), visibility 0.8s;
+    /* CSS-only fallback: auto-dismiss after 2.5s even if JS/GSAP fails */
+    animation: preloaderAutoDismiss 0.8s ease-in-out 2.5s forwards;
 }
 
 .preloader.is-hidden {
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0 !important;
+    visibility: hidden !important;
     pointer-events: none;
+    display: none !important;
+}
+
+@keyframes preloaderAutoDismiss {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
 
 .preloader-inner {
@@ -1385,9 +1391,9 @@ em {
     transform: translateY(-2px);
 }
 
-/* Better preloader transition */
+/* Preloader GPU hint */
 .preloader {
-    will-change: opacity;
+    will-change: opacity, visibility;
 }
 
 @media (max-width: 480px) {
