@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="white">
+  <!-- Do LaB geometric logo - 3 rows of 2 shapes each -->
+  <!-- Row 1: two parallelogram/trapezoid shapes -->
+  <polygon points="15,10 85,10 75,40 25,40" opacity="0.95"/>
+  <polygon points="115,10 185,10 175,40 125,40" opacity="0.95"/>
+  <!-- Row 2: hexagon-ish shapes -->
+  <polygon points="30,55 85,55 95,75 85,95 30,95 20,75" opacity="0.95"/>
+  <polygon points="115,55 170,55 180,75 170,95 115,95 105,75" opacity="0.95"/>
+  <!-- Row 3: rectangles -->
+  <rect x="15" y="110" width="75" height="35" rx="2" opacity="0.95"/>
+  <polygon points="115,110 185,110 180,145 120,145" opacity="0.95"/>
+</svg>
