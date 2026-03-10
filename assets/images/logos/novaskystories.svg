@@ -1,23 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" fill="white">
-  <!-- NOVA text with teal accent in O -->
-  <text x="160" y="55" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="6">N</text>
-  <!-- The O with teal quarter accents -->
-  <g transform="translate(127,30)">
-    <text x="0" y="25" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="58" font-weight="700" fill="white" letter-spacing="6">O</text>
-  </g>
-  <!-- Teal accent pieces inside O -->
-  <clipPath id="oClip">
-    <circle cx="148" cy="38" r="13"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="white">
+  <!-- N - geometric with angled diagonal -->
+  <polygon points="10,10 30,10 80,70 80,10 100,10 100,80 80,80 30,20 30,80 10,80"/>
+  
+  <!-- O with teal quarter accents -->
+  <circle cx="145" cy="45" r="35" fill="none" stroke="white" stroke-width="14"/>
+  <!-- Teal accent: top-right and bottom-left quadrants -->
+  <clipPath id="oMask">
+    <circle cx="145" cy="45" r="35"/>
   </clipPath>
-  <g clip-path="url(#oClip)">
-    <rect x="148" y="25" width="14" height="14" fill="#2dd4a8"/>
-    <rect x="135" y="38" width="14" height="14" fill="#2dd4a8"/>
+  <g clip-path="url(#oMask)">
+    <!-- Top-right quadrant teal -->
+    <rect x="145" y="10" width="40" height="35" fill="#00e5b0"/>
+    <!-- Bottom-left quadrant teal -->
+    <rect x="105" y="45" width="40" height="35" fill="#00e5b0"/>
+    <!-- Cut out inner circle to create ring -->
+    <circle cx="145" cy="45" r="22" fill="black"/>
   </g>
-  <text x="20" y="55" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="6">N</text>
-  <g transform="translate(78,0)">
-    <text x="0" y="55" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="6">V</text>
-  </g>
-  <text x="195" y="55" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="58" font-weight="700" letter-spacing="6">A</text>
+  <!-- Re-draw white ring parts -->
+  <path d="M145,10 A35,35 0 0,0 110,45" fill="none" stroke="white" stroke-width="14"/>
+  <path d="M145,80 A35,35 0 0,0 180,45" fill="none" stroke="white" stroke-width="14"/>
+  
+  <!-- V -->
+  <polygon points="195,10 215,10 240,70 265,10 285,10 250,80 230,80"/>
+  
+  <!-- A -->
+  <polygon points="300,80 320,10 340,10 370,80 350,80 342,60 318,60 310,80"/>
+  <polygon points="322,48 338,48 330,25"/>
+  
   <!-- SKY STORIES subtitle -->
-  <text x="160" y="82" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="18" font-weight="300" letter-spacing="10" fill="rgba(255,255,255,0.85)">SKY STORIES</text>
+  <text x="200" y="110" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="22" font-weight="300" letter-spacing="14">SKY STORIES</text>
 </svg>

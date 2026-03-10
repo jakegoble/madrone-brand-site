@@ -1,18 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" fill="white">
-  <!-- MOM eye/wave circular logo mark -->
-  <g transform="translate(50,50)">
-    <!-- Outer swirl arcs -->
-    <path d="M-35,0 C-35,-20 -15,-35 0,-35 C15,-35 35,-20 35,0 C35,20 15,35 0,35 C-15,35 -35,20 -35,0" fill="none" stroke="white" stroke-width="3"/>
-    <!-- Left wing/swirl -->
-    <path d="M-38,0 C-38,-8 -42,-20 -48,-25 C-42,-15 -40,-5 -40,0 C-40,5 -42,15 -48,25 C-42,20 -38,8 -38,0" fill="white" opacity="0.9"/>
-    <!-- Right wing/swirl -->
-    <path d="M38,0 C38,-8 42,-20 48,-25 C42,-15 40,-5 40,0 C40,5 42,15 48,25 C42,20 38,8 38,0" fill="white" opacity="0.9"/>
-    <!-- Inner circle (eye) -->
-    <circle cx="0" cy="0" r="14" fill="rgba(255,255,255,0.4)"/>
-    <circle cx="0" cy="0" r="8" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 110" fill="#b0b0b0">
+  <!-- Circular eye/wave logomark -->
+  <g transform="translate(55,55)">
+    <!-- Outer circular border -->
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#b0b0b0" stroke-width="3"/>
+    <!-- Left curved horn/wing -->
+    <path d="M-42,0 C-52,-18 -52,-38 -42,-48 C-46,-28 -44,-10 -42,0" fill="#b0b0b0"/>
+    <path d="M-42,0 C-46,10 -52,28 -42,48 C-52,38 -52,18 -42,0" fill="#b0b0b0"/>
+    <!-- Right curved horn/wing -->
+    <path d="M42,0 C52,-18 52,-38 42,-48 C46,-28 44,-10 42,0" fill="#b0b0b0"/>
+    <path d="M42,0 C46,10 52,28 42,48 C52,38 52,18 42,0" fill="#b0b0b0"/>
+    <!-- Inner eye - dark circle with lighter ring -->
+    <circle cx="0" cy="0" r="20" fill="#b0b0b0" opacity="0.4"/>
+    <circle cx="0" cy="0" r="12" fill="#404040"/>
+    <circle cx="0" cy="0" r="8" fill="#b0b0b0" opacity="0.6"/>
   </g>
-  <!-- Text -->
-  <text x="120" y="32" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="rgba(255,255,255,0.85)">MINDS</text>
-  <text x="120" y="62" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="rgba(255,255,255,0.85)">OVER</text>
-  <text x="120" y="92" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="rgba(255,255,255,0.85)">MATTER</text>
+  <!-- Stacked text: MINDS OVER MATTER -->
+  <text x="130" y="35" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="32" font-weight="800" letter-spacing="3">MINDS</text>
+  <text x="130" y="68" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="32" font-weight="800" letter-spacing="3">OVER</text>
+  <text x="130" y="101" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="32" font-weight="800" letter-spacing="3">MATTER</text>
 </svg>
