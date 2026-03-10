@@ -351,24 +351,22 @@
             });
         });
 
-        // ---------- Budget Bars ----------
-        document.querySelectorAll('.budget-fill').forEach((fill, i) => {
-            const targetWidth = fill.getAttribute('data-width');
-
-            ScrollTrigger.create({
-                trigger: fill.closest('.budget-bar'),
-                start: 'top 92%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(fill, {
-                        width: targetWidth + '%',
-                        duration: 1.2,
-                        delay: i * 0.1,
-                        ease: 'power2.out'
-                    });
-                }
+        // ---------- Budget Table Rows ----------
+        const budgetRows = document.querySelectorAll('.budget-row');
+        if (budgetRows.length) {
+            gsap.from(budgetRows, {
+                scrollTrigger: {
+                    trigger: '.budget-table',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                x: -20,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: 'power3.out'
             });
-        });
+        }
 
         // ---------- Background Parallax ----------
         document.querySelectorAll('.bg-image').forEach(img => {
@@ -517,6 +515,23 @@
                 scale: 0.5,
                 duration: 1.2,
                 ease: 'back.out(1.5)'
+            });
+        }
+
+        // ---------- Contact details ----------
+        const contactItems = document.querySelectorAll('.contact-item');
+        if (contactItems.length) {
+            gsap.from(contactItems, {
+                scrollTrigger: {
+                    trigger: '.contact-grid',
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 15,
+                duration: 0.6,
+                stagger: 0.12,
+                ease: 'power3.out'
             });
         }
     }
