@@ -1902,15 +1902,76 @@ em {
     transition: filter 0.5s ease;
 }
 
-/* ---------- Framework Visual ---------- */
-.framework-visual {
-    margin: 0 auto var(--space-md);
-    max-width: 300px;
+/* ---------- Framework Section (dark, no photo) ---------- */
+.framework-section {
+    background: #050507;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0;
 }
 
-.framework-orbit {
-    width: 100%;
-    height: auto;
+.framework-section .section-bg { display: none; }
+
+.framework-geo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    opacity: 1;
+    pointer-events: none;
+    animation: geoSpin 60s linear infinite;
+}
+
+@keyframes geoSpin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.framework-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(225, 163, 119, 0.15);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 2.5rem;
+    margin: var(--space-md) auto 0;
+    max-width: 900px;
+    gap: 0;
+    flex-wrap: wrap;
+}
+
+.framework-bar-item {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.4rem 1.2rem;
+    white-space: nowrap;
+}
+
+.framework-bar-div {
+    width: 1px;
+    height: 1.2rem;
+    background: rgba(225, 163, 119, 0.3);
+    flex-shrink: 0;
+}
+
+.framework-bar-item:hover {
+    color: #e1a377;
+    transition: color 0.3s ease;
+}
+
+.framework-limit {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.06em;
+    margin-top: 1.75rem;
+    text-align: center;
 }
 
 /* ---------- Leadership Canvas ---------- */
@@ -2071,8 +2132,12 @@ em {
     .split-layout--why {
         grid-template-columns: 1fr;
     }
-    .service-pillars {
-        grid-template-columns: repeat(2, auto);
+    .framework-bar {
+        padding: 1rem 1.5rem;
+    }
+    .framework-bar-item {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
     }
     .case-studies-grid {
         grid-template-columns: 1fr;
@@ -2104,8 +2169,19 @@ em {
     .client-portfolio-categories {
         gap: 1.75rem;
     }
-    .framework-visual {
-        max-width: 220px;
+    .framework-bar {
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 1.5rem;
+    }
+    .framework-bar-div {
+        width: 2rem;
+        height: 1px;
+        background: rgba(225, 163, 119, 0.2);
+    }
+    .framework-geo {
+        width: 400px;
+        height: 400px;
     }
     .contact-grid {
         flex-direction: column;
