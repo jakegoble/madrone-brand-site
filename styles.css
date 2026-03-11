@@ -750,6 +750,36 @@ em {
     margin-bottom: 1.25rem;
 }
 
+/* Feature card icon wrap — circular glow background */
+.card-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(225,163,119,0.12) 0%, rgba(225,163,119,0.03) 70%, transparent 100%);
+    border: 1px solid rgba(225,163,119,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.glass-card--feature:hover .card-icon-wrap {
+    background: radial-gradient(circle, rgba(225,163,119,0.2) 0%, rgba(225,163,119,0.06) 70%, transparent 100%);
+    border-color: rgba(225,163,119,0.3);
+    box-shadow: 0 0 24px rgba(225,163,119,0.1);
+}
+
+/* Feature card overrides */
+.glass-card--feature {
+    padding: 2rem 1.75rem 2.25rem;
+    border-top: 2px solid rgba(225,163,119,0.25);
+}
+
+.glass-card--feature:hover {
+    border-top-color: rgba(225,163,119,0.5);
+}
+
 .card-title {
     font-family: var(--font-heading);
     font-weight: 600;
