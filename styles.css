@@ -1762,6 +1762,146 @@ em {
     color: rgba(255, 255, 255, 0.7);
 }
 
+/* ---------- Pillar Animated Icons ---------- */
+.pillar-icon-anim {
+    margin-bottom: 1.75rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pillar-icon-anim svg {
+    overflow: visible;
+}
+
+/* — Strategy: constellation network — */
+.pillar-icon-anim .node {
+    fill: rgba(225, 163, 119, 0.9);
+    animation: nodePulse 3s ease-in-out infinite;
+}
+.pillar-icon-anim .node--center { fill: #e1a377; animation-delay: 0.5s; }
+.pillar-icon-anim .node--b { animation-delay: 1s; }
+.pillar-icon-anim .node--c { animation-delay: 1.5s; }
+
+.pillar-icon-anim .edge {
+    stroke: rgba(225, 163, 119, 0.25);
+    stroke-width: 1;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: edgeDraw 2.5s ease forwards;
+}
+.pillar-icon-anim .edge--2 { animation-delay: 0.3s; }
+.pillar-icon-anim .edge--3 { animation-delay: 0.6s; }
+.pillar-icon-anim .edge--4 { animation-delay: 0.9s; }
+.pillar-icon-anim .edge--5 { animation-delay: 1.2s; }
+.pillar-icon-anim .edge--6 { animation-delay: 1.5s; }
+
+.pillar-icon-anim .orbit {
+    stroke: rgba(225, 163, 119, 0.08);
+    stroke-width: 1;
+    stroke-dasharray: 4 6;
+    animation: orbitSpin 20s linear infinite;
+    transform-origin: 32px 32px;
+}
+
+@keyframes nodePulse {
+    0%, 100% { opacity: 0.7; r: 3; }
+    50% { opacity: 1; r: 3.8; }
+}
+
+@keyframes edgeDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes orbitSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* — Production: rising structure — */
+.pillar-icon-anim .stage-floor {
+    stroke: rgba(225, 163, 119, 0.3);
+    stroke-width: 1.5;
+}
+
+.pillar-icon-anim .block {
+    fill: rgba(225, 163, 119, 0.12);
+    stroke: rgba(225, 163, 119, 0.4);
+    stroke-width: 1;
+    animation: blockRise 2s ease-out forwards;
+    opacity: 0;
+}
+.pillar-icon-anim .block--1 { animation-delay: 0.2s; transform-origin: 19px 52px; }
+.pillar-icon-anim .block--2 { animation-delay: 0.5s; transform-origin: 32px 52px; }
+.pillar-icon-anim .block--3 { animation-delay: 0.8s; transform-origin: 45px 52px; }
+
+.pillar-icon-anim .peak {
+    fill: none;
+    stroke: #e1a377;
+    stroke-width: 1.2;
+    opacity: 0;
+    animation: peakReveal 1s ease forwards 1.4s;
+}
+
+.pillar-icon-anim .spine {
+    stroke: rgba(225, 163, 119, 0.3);
+    stroke-width: 1;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    animation: edgeDraw 1s ease forwards 1.2s;
+}
+
+@keyframes blockRise {
+    0% { opacity: 0; transform: translateY(10px) scaleY(0.3); }
+    100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+@keyframes peakReveal {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 0.9; transform: translateY(0); }
+}
+
+/* — Amplification: broadcast waves — */
+.pillar-icon-anim .signal-core {
+    fill: #e1a377;
+    animation: corePulse 2s ease-in-out infinite;
+}
+
+.pillar-icon-anim .wave {
+    stroke: rgba(225, 163, 119, 0.3);
+    stroke-width: 1;
+    fill: none;
+    opacity: 0;
+    animation: waveExpand 3s ease-out infinite;
+}
+.pillar-icon-anim .wave--2 { animation-delay: 1s; }
+.pillar-icon-anim .wave--3 { animation-delay: 2s; }
+
+.pillar-icon-anim .ray {
+    stroke: rgba(225, 163, 119, 0.2);
+    stroke-width: 1;
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    animation: edgeDraw 1.5s ease forwards;
+}
+.pillar-icon-anim .ray--e { animation-delay: 0.3s; }
+.pillar-icon-anim .ray--s { animation-delay: 0.6s; }
+.pillar-icon-anim .ray--w { animation-delay: 0.9s; }
+
+@keyframes corePulse {
+    0%, 100% { opacity: 0.8; r: 4; }
+    50% { opacity: 1; r: 5; }
+}
+
+@keyframes waveExpand {
+    0% { opacity: 0.6; transform: scale(0.6); }
+    100% { opacity: 0; transform: scale(1.1); }
+}
+
+/* Icon hover enhancement */
+.pillar-card--clean:hover .pillar-icon-anim svg {
+    filter: drop-shadow(0 0 8px rgba(225, 163, 119, 0.3));
+    transition: filter 0.5s ease;
+}
+
 /* ---------- Framework Visual ---------- */
 .framework-visual {
     margin: 0 auto var(--space-md);
