@@ -2099,70 +2099,112 @@ em {
 }
 
 /* ---------- Client Portfolio ---------- */
+
+/* Portfolio — lighter overlay so dome photo shows through */
+#clientPortfolio .bg-overlay--heavy {
+    background: linear-gradient(180deg, rgba(5,5,7,0.5) 0%, rgba(5,5,7,0.58) 40%, rgba(5,5,7,0.7) 100%);
+}
+
+/* Portfolio — animated gradient overlay */
+.portfolio-gradient-anim {
+    background: linear-gradient(
+        140deg,
+        rgba(225, 163, 119, 0.06) 0%,
+        transparent 25%,
+        rgba(140, 160, 220, 0.05) 45%,
+        transparent 65%,
+        rgba(225, 163, 119, 0.04) 100%
+    );
+    background-size: 300% 300%;
+    animation: portfolioGradientShift 18s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes portfolioGradientShift {
+    0%   { background-position: 0% 0%; }
+    33%  { background-position: 100% 50%; }
+    66%  { background-position: 50% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 /* Client Portfolio — Category Grid */
 .client-portfolio-categories {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 .client-category {
     text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(225, 163, 119, 0.1);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 2rem 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth);
+}
+
+.client-category:hover {
+    border-color: rgba(225, 163, 119, 0.2);
+    box-shadow: 0 4px 30px rgba(225, 163, 119, 0.05);
 }
 
 .client-category-label {
     display: inline-block;
     font-family: var(--font-heading);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-accent);
     margin-bottom: 1.25rem;
-    opacity: 0.7;
+    opacity: 0.85;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(225, 163, 119, 0.15);
 }
 
 .client-logos-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 .client-logo-item {
-    background: var(--color-glass);
-    border: 1px solid var(--color-glass-border);
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: var(--radius-md);
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.4s var(--ease-smooth);
-    width: 110px;
-    height: 60px;
 }
 
 .client-logo-item img {
-    max-width: 80px;
-    max-height: 32px;
+    max-width: 90px;
+    max-height: 34px;
     width: auto;
     height: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
-    opacity: 0.55;
-    transition: opacity 0.3s var(--ease-smooth), filter 0.3s var(--ease-smooth);
+    opacity: 0.6;
+    transition: opacity 0.4s var(--ease-smooth), filter 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
 }
 
 .client-logo-item:hover {
-    border-color: rgba(225, 163, 119, 0.25);
-    background: var(--color-glass-hover);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(225, 163, 119, 0.15);
 }
 
 .client-logo-item:hover img {
-    opacity: 0.9;
+    opacity: 1;
     filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(350deg) brightness(1.1);
+    transform: scale(1.08);
 }
 
 /* ---------- Smooth Section Transitions ---------- */
@@ -2192,13 +2234,14 @@ em {
         grid-template-columns: repeat(3, 1fr);
     }
     .client-logo-item {
-        width: 95px;
-        height: 52px;
-        padding: 1rem 1.25rem;
+        padding: 0.75rem 1rem;
     }
     .client-logo-item img {
-        max-width: 65px;
+        max-width: 70px;
         max-height: 28px;
+    }
+    .client-category {
+        padding: 1.5rem 1.25rem 1.25rem;
     }
     .why-stats-row {
         grid-template-columns: repeat(3, 1fr);
@@ -2268,16 +2311,17 @@ em {
         gap: 1rem;
     }
     .client-logo-item {
-        width: 80px;
-        height: 46px;
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 0.75rem;
     }
     .client-logo-item img {
         max-width: 55px;
-        max-height: 24px;
+        max-height: 22px;
     }
     .client-portfolio-categories {
-        gap: 1.75rem;
+        gap: 1.25rem;
+    }
+    .client-category {
+        padding: 1.25rem 1rem 1rem;
     }
     .framework-bar {
         flex-direction: column;
