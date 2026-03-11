@@ -215,7 +215,9 @@
             '.contact-icon',
             '.cta-button',
             '.footer-bar',
-            '.stat-card'
+            '.stat-card',
+            '.client-logos',
+            '.framework-visual'
         ];
 
         document.querySelectorAll(revealSelectors.join(',')).forEach(el => {
@@ -243,6 +245,7 @@
         addStaggerDelays('.engagement-options', '.engagement-card', 0.12);
         addStaggerDelays('.venue-details', '.venue-detail', 0.08);
         addStaggerDelays('.contact-grid', '.contact-item', 0.06);
+        addStaggerDelays('.why-stats-row', '.stat-card', 0.1);
 
         // Animated counters — keep these as JS since they need counting logic
         initCounters();
@@ -369,5 +372,110 @@
             }, 300);
         }
     });
+
+    // ── Leadership Canvas — Animated Particle Network ────
+    const leadershipCanvas = document.getElementById('leadershipCanvas');
+    if (leadershipCanvas) {
+        const ctx = leadershipCanvas.getContext('2d');
+        let particles = [];
+        let canvasW, canvasH;
+        const PARTICLE_COUNT = 60;
+        const CONNECTION_DIST = 120;
+        const accentColor = [225, 163, 119];
+
+        function resizeCanvas() {
+            const section = leadershipCanvas.closest('.section');
+            if (!section) return;
+            canvasW = section.offsetWidth;
+            canvasH = section.offsetHeight;
+            leadershipCanvas.width = canvasW * (window.devicePixelRatio || 1);
+            leadershipCanvas.height = canvasH * (window.devicePixelRatio || 1);
+            leadershipCanvas.style.width = canvasW + 'px';
+            leadershipCanvas.style.height = canvasH + 'px';
+            ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push({
+                    x: Math.random() * canvasW,
+                    y: Math.random() * canvasH,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    r: Math.random() * 2 + 1,
+                    alpha: Math.random() * 0.4 + 0.1
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvasW, canvasH);
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONNECTION_DIST) {
+                        const opacity = (1 - dist / CONNECTION_DIST) * 0.12;
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(' + accentColor.join(',') + ',' + opacity + ')';
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw particles
+            particles.forEach(function (p) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + accentColor.join(',') + ',' + p.alpha + ')';
+                ctx.fill();
+            });
+        }
+
+        function updateParticles() {
+            particles.forEach(function (p) {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvasW) p.vx *= -1;
+                if (p.y < 0 || p.y > canvasH) p.vy *= -1;
+            });
+        }
+
+        let canvasRunning = false;
+        function animateCanvas() {
+            if (!canvasRunning) return;
+            updateParticles();
+            drawParticles();
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // Only animate when section is near viewport
+        const canvasObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting && !canvasRunning) {
+                    canvasRunning = true;
+                    animateCanvas();
+                } else if (!entry.isIntersecting) {
+                    canvasRunning = false;
+                }
+            });
+        }, { rootMargin: '200px' });
+
+        resizeCanvas();
+        initParticles();
+        canvasObserver.observe(leadershipCanvas.closest('.section'));
+
+        window.addEventListener('resize', function () {
+            resizeCanvas();
+            initParticles();
+        });
+    }
 
 })();

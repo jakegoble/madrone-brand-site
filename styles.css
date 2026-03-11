@@ -743,6 +743,10 @@ em {
     opacity: 0.9;
 }
 
+.card-icon--lg {
+    margin-bottom: 1.25rem;
+}
+
 .card-title {
     font-family: var(--font-heading);
     font-weight: 600;
@@ -1663,6 +1667,100 @@ em {
     background: var(--color-bg);
 }
 
+/* ---------- Why Stats Row ---------- */
+.why-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ---------- Pillar Glass Cards ---------- */
+.pillar-card--glass {
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-md);
+    padding: 2rem !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.5s var(--ease-smooth);
+}
+
+.pillar-card--glass:hover {
+    border-color: rgba(225, 163, 119, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(225, 163, 119, 0.06);
+}
+
+.pillar-icon {
+    margin-bottom: 1rem;
+    opacity: 0.85;
+}
+
+/* ---------- Framework Visual ---------- */
+.framework-visual {
+    margin: 0 auto var(--space-md);
+    max-width: 300px;
+}
+
+.framework-orbit {
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- Leadership Canvas ---------- */
+.section-bg--canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--color-bg);
+}
+
+.leadership-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ---------- Client Portfolio ---------- */
+.client-logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.client-logo-item {
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s var(--ease-smooth);
+}
+
+.client-logo-item span {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.3s var(--ease-smooth);
+}
+
+.client-logo-item:hover {
+    border-color: rgba(225, 163, 119, 0.2);
+    background: var(--color-glass-hover);
+}
+
+.client-logo-item:hover span {
+    color: var(--color-accent);
+}
+
 /* ---------- Smooth Section Transitions ---------- */
 .section + .section {
     margin-top: -1px;
@@ -1687,6 +1785,12 @@ em {
         grid-template-columns: repeat(2, 1fr);
     }
     .partners-grid--5 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .client-logos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .why-stats-row {
         grid-template-columns: repeat(3, 1fr);
     }
 }
@@ -1744,6 +1848,17 @@ em {
     }
     .case-studies-grid--3 {
         grid-template-columns: 1fr;
+    }
+    .why-stats-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .client-logos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .framework-visual {
+        max-width: 220px;
     }
     .contact-grid {
         flex-direction: column;
