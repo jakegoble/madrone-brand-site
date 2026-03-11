@@ -219,8 +219,16 @@
         ];
 
         document.querySelectorAll(revealSelectors.join(',')).forEach(el => {
-            el.classList.add('reveal');
-            revealObserver.observe(el);
+            const rect = el.getBoundingClientRect();
+            const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+            if (inViewport) {
+                // Already visible — add both classes in one frame to prevent flicker
+                el.classList.add('reveal', 'is-visible');
+            } else {
+                el.classList.add('reveal');
+                revealObserver.observe(el);
+            }
         });
 
         // Add stagger delays to grouped children
@@ -242,12 +250,17 @@
         // Background parallax — simple transform on scroll, no GSAP needed
         initParallax();
 
-        // Safety net: after 6 seconds, force-show anything still hidden
+        // Safety net: after 8 seconds, reveal anything still hidden
+        // but only if it's near the visible area (not far below fold)
         setTimeout(function () {
             document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
-                el.classList.add('is-visible');
+                var rect = el.getBoundingClientRect();
+                // Only force-show elements within 2x viewport of current scroll
+                if (rect.top < window.innerHeight * 2) {
+                    el.classList.add('is-visible');
+                }
             });
-        }, 6000);
+        }, 8000);
     }
 
     function addStaggerDelays(parentSelector, childSelector, delayStep) {
