@@ -1724,41 +1724,70 @@ em {
 }
 
 /* ---------- Client Portfolio ---------- */
-.client-logos {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 900px;
+/* Client Portfolio — Category Grid */
+.client-portfolio-categories {
+    max-width: 1000px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.client-category {
+    text-align: center;
+}
+
+.client-category-label {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.25rem;
+    opacity: 0.7;
+}
+
+.client-logos-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .client-logo-item {
     background: var(--color-glass);
     border: 1px solid var(--color-glass-border);
     border-radius: var(--radius-md);
-    padding: 1.75rem 1.5rem;
+    padding: 1.25rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.4s var(--ease-smooth);
+    width: 110px;
+    height: 60px;
 }
 
-.client-logo-item span {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: rgba(255,255,255,0.5);
-    transition: color 0.3s var(--ease-smooth);
+.client-logo-item img {
+    max-width: 80px;
+    max-height: 32px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.55;
+    transition: opacity 0.3s var(--ease-smooth), filter 0.3s var(--ease-smooth);
 }
 
 .client-logo-item:hover {
-    border-color: rgba(225, 163, 119, 0.2);
+    border-color: rgba(225, 163, 119, 0.25);
     background: var(--color-glass-hover);
 }
 
-.client-logo-item:hover span {
-    color: var(--color-accent);
+.client-logo-item:hover img {
+    opacity: 0.9;
+    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(350deg) brightness(1.1);
 }
 
 /* ---------- Smooth Section Transitions ---------- */
@@ -1787,8 +1816,14 @@ em {
     .partners-grid--5 {
         grid-template-columns: repeat(3, 1fr);
     }
-    .client-logos {
-        grid-template-columns: repeat(3, 1fr);
+    .client-logo-item {
+        width: 95px;
+        height: 52px;
+        padding: 1rem 1.25rem;
+    }
+    .client-logo-item img {
+        max-width: 65px;
+        max-height: 28px;
     }
     .why-stats-row {
         grid-template-columns: repeat(3, 1fr);
@@ -1853,9 +1888,17 @@ em {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .client-logos {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+    .client-logo-item {
+        width: 80px;
+        height: 46px;
+        padding: 0.75rem 1rem;
+    }
+    .client-logo-item img {
+        max-width: 55px;
+        max-height: 24px;
+    }
+    .client-portfolio-categories {
+        gap: 1.75rem;
     }
     .framework-visual {
         max-width: 220px;
