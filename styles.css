@@ -39,6 +39,8 @@
     /* Transitions */
     --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --reveal-duration: 0.8s;
+    --reveal-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -64,6 +66,152 @@ html.lenis, html.lenis body {
 }
 .lenis.lenis-smooth [data-lenis-prevent] {
     overscroll-behavior: contain;
+}
+
+/* ---------- Reveal Animation System ---------- */
+/* All elements start hidden, become visible via .is-visible class.
+   CSS handles all transitions — no GSAP scroll triggers needed. */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity var(--reveal-duration) var(--reveal-ease),
+        transform var(--reveal-duration) var(--reveal-ease);
+    will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Slight scale for cards */
+.glass-card.reveal,
+.pillar-card.reveal,
+.partner-card.reveal,
+.engagement-card.reveal,
+.stat-card.reveal,
+.case-card.reveal {
+    transform: translateY(20px) scale(0.97);
+}
+.glass-card.reveal.is-visible,
+.pillar-card.reveal.is-visible,
+.partner-card.reveal.is-visible,
+.engagement-card.reveal.is-visible,
+.stat-card.reveal.is-visible,
+.case-card.reveal.is-visible {
+    transform: translateY(0) scale(1);
+}
+
+/* Slide from left for capability items and budget rows */
+.capability-item.reveal {
+    transform: translateX(-20px);
+    opacity: 0;
+}
+.capability-item.reveal.is-visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.budget-row.reveal {
+    transform: translateX(-16px);
+    opacity: 0;
+}
+.budget-row.reveal.is-visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Section labels — subtle letter-spacing shift */
+.section-label.reveal {
+    transform: translateY(8px);
+    letter-spacing: 0.2em;
+}
+.section-label.reveal.is-visible {
+    transform: translateY(0);
+    letter-spacing: 0.3em;
+    transition:
+        opacity var(--reveal-duration) var(--reveal-ease),
+        transform var(--reveal-duration) var(--reveal-ease),
+        letter-spacing 1s var(--reveal-ease);
+}
+
+/* Service pills — pop in */
+.service-pill.reveal {
+    transform: translateY(12px) scale(0.9);
+}
+.service-pill.reveal.is-visible {
+    transform: translateY(0) scale(1);
+}
+
+/* CTA button */
+.cta-button.reveal {
+    transform: translateY(16px) scale(0.95);
+}
+.cta-button.reveal.is-visible {
+    transform: translateY(0) scale(1);
+}
+
+/* Contact icon */
+.contact-icon.reveal {
+    transform: scale(0.5) rotate(-60deg);
+}
+.contact-icon.reveal.is-visible {
+    transform: scale(1) rotate(0);
+    transition:
+        opacity var(--reveal-duration) var(--reveal-ease),
+        transform 1s var(--ease-bounce);
+}
+
+/* Footer */
+.footer-bar.reveal {
+    transform: none;
+}
+
+/* ---------- Hero Entrance (CSS-driven) ---------- */
+.hero-eyebrow,
+.title-line,
+.hero-subtitle,
+.scroll-indicator {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s var(--reveal-ease), transform 1s var(--reveal-ease);
+}
+.hero-line {
+    opacity: 0;
+    transform: translateY(0) scaleX(0);
+    transform-origin: left center;
+    transition: opacity 0.9s var(--reveal-ease), transform 1s var(--reveal-ease);
+}
+
+.hero-ready .hero-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+}
+.hero-ready .title-line {
+    opacity: 1;
+    transform: translateY(0);
+}
+.hero-ready .title-line:nth-child(1) { transition-delay: 0.15s; }
+.hero-ready .title-line:nth-child(2) { transition-delay: 0.3s; }
+.hero-ready .title-line:nth-child(3) { transition-delay: 0.45s; }
+
+.hero-ready .hero-subtitle {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+.hero-ready .hero-line {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+    transition-delay: 0.6s;
+}
+.hero-ready .scroll-indicator {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.75s;
 }
 .lenis.lenis-stopped {
     overflow: hidden;

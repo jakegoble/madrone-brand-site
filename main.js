@@ -1,6 +1,6 @@
 /* ============================================
-   MADRONE STUDIOS — Scroll Animations & Interactions
-   v4.0 — Lenis smooth scroll, mobile menu, varied reveals
+   MADRONE STUDIOS — Smooth Scroll & Animations
+   v5.0 — Lightweight CSS reveals + Lenis smooth scroll
    ============================================ */
 
 (function () {
@@ -10,99 +10,47 @@
     let lenis;
     try {
         lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.4,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
+            wheelMultiplier: 0.8,
+            touchMultiplier: 1.5,
         });
 
-        // Connect Lenis → GSAP ScrollTrigger
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => lenis.raf(time * 1000));
-            gsap.ticker.lagSmoothing(0);
-        } else {
-            // Fallback RAF loop if GSAP unavailable
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
+        function raf(time) {
+            lenis.raf(time);
             requestAnimationFrame(raf);
         }
+        requestAnimationFrame(raf);
     } catch (e) {
         console.warn('Lenis init skipped:', e.message);
     }
 
-    // Ensure GSAP is available for the rest
-    if (typeof gsap === 'undefined') {
-        console.warn('GSAP not loaded');
-        var pl = document.getElementById('preloader');
-        if (pl) setTimeout(function () { pl.classList.add('is-hidden'); }, 2000);
-        return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
     // ── Preloader ────────────────────────────────────────
     const preloader = document.getElementById('preloader');
-    let animationsInitialized = false;
-
-    function finishPreloaderDismiss() {
-        if (preloader) {
-            preloader.classList.add('is-hidden');
-            preloader.style.display = 'none';
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-            preloader.style.pointerEvents = 'none';
-        }
-        if (!animationsInitialized) {
-            animationsInitialized = true;
-            try {
-                initAnimations();
-                ScrollTrigger.refresh();
-            } catch (e) {
-                console.warn('Animation init error:', e);
-            }
-        }
-    }
 
     function dismissPreloader() {
-        if (animationsInitialized) return;
-        try {
-            gsap.to(preloader, {
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power2.inOut',
-                onComplete: finishPreloaderDismiss
-            });
-        } catch (e) {
-            finishPreloaderDismiss();
-        }
+        if (!preloader) return;
+        preloader.style.transition = 'opacity 0.6s ease';
+        preloader.style.opacity = '0';
         setTimeout(function () {
-            if (preloader && getComputedStyle(preloader).opacity !== '0') {
-                preloader.style.transition = 'opacity 0.5s ease';
-                preloader.style.opacity = '0';
-                setTimeout(finishPreloaderDismiss, 600);
-            }
-        }, 1500);
+            preloader.classList.add('is-hidden');
+            preloader.style.display = 'none';
+            preloader.style.visibility = 'hidden';
+            preloader.style.pointerEvents = 'none';
+            initReveals();
+        }, 650);
     }
 
     if (document.readyState === 'complete') {
-        setTimeout(dismissPreloader, 400);
+        setTimeout(dismissPreloader, 300);
     } else {
-        window.addEventListener('load', function () { setTimeout(dismissPreloader, 400); });
+        window.addEventListener('load', function () { setTimeout(dismissPreloader, 300); });
+        // Safety: dismiss after 3s no matter what
         setTimeout(dismissPreloader, 3000);
     }
-    setTimeout(function () {
-        if (preloader && !preloader.classList.contains('is-hidden')) {
-            preloader.style.transition = 'opacity 0.3s ease';
-            preloader.style.opacity = '0';
-            setTimeout(finishPreloaderDismiss, 400);
-        }
-    }, 5000);
 
     // ── Cursor Glow ──────────────────────────────────────
     const cursorGlow = document.getElementById('cursorGlow');
@@ -114,13 +62,12 @@
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-        });
+        }, { passive: true });
 
         function updateCursorGlow() {
-            glowX += (mouseX - glowX) * 0.06;
-            glowY += (mouseY - glowY) * 0.06;
-            cursorGlow.style.left = glowX + 'px';
-            cursorGlow.style.top = glowY + 'px';
+            glowX += (mouseX - glowX) * 0.05;
+            glowY += (mouseY - glowY) * 0.05;
+            cursorGlow.style.transform = 'translate(' + glowX + 'px, ' + glowY + 'px)';
             requestAnimationFrame(updateCursorGlow);
         }
         requestAnimationFrame(updateCursorGlow);
@@ -147,7 +94,7 @@
         }, { passive: true });
     }
 
-    // ── Mobile Menu (Hamburger) ──────────────────────────
+    // ── Mobile Menu ──────────────────────────────────────
     const hamburger = document.getElementById('navHamburger');
     const mobileMenu = document.getElementById('mobileMenu');
 
@@ -156,15 +103,10 @@
             const isOpen = mobileMenu.classList.toggle('is-open');
             hamburger.classList.toggle('is-open');
             hamburger.setAttribute('aria-expanded', isOpen);
-
-            // Lock/unlock scroll
-            if (lenis) {
-                isOpen ? lenis.stop() : lenis.start();
-            }
+            if (lenis) { isOpen ? lenis.stop() : lenis.start(); }
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        // Close on link click
         mobileMenu.querySelectorAll('.mobile-menu-link').forEach(link => {
             link.addEventListener('click', function () {
                 mobileMenu.classList.remove('is-open');
@@ -175,7 +117,6 @@
             });
         });
 
-        // Close on Escape key
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
                 mobileMenu.classList.remove('is-open');
@@ -187,7 +128,7 @@
         });
     }
 
-    // ── Navigation ───────────────────────────────────────
+    // ── Navigation Dots ──────────────────────────────────
     const nav = document.getElementById('mainNav');
     const sections = document.querySelectorAll('.section');
     const navDotsContainer = document.getElementById('navDots');
@@ -209,7 +150,6 @@
     }
 
     const navDots = document.querySelectorAll('.nav-dot');
-
     let navTicking = false;
     window.addEventListener('scroll', () => {
         if (!navTicking) {
@@ -225,308 +165,166 @@
                 navDots.forEach((dot, i) => {
                     dot.classList.toggle('is-active', i === current);
                 });
-
                 navTicking = false;
             });
             navTicking = true;
         }
     }, { passive: true });
 
-    // ── Reveal Helpers ───────────────────────────────────
-    // Standard reveal with fromTo for hidden-tab resilience
-    function scrollReveal(targets, triggerEl, fromVars, toVars, scrollOpts) {
-        var defaults = { opacity: 1, y: 0, x: 0, scale: 1, rotation: 0 };
-        var to = Object.assign({}, defaults, toVars || {}, {
-            scrollTrigger: Object.assign({
-                trigger: triggerEl,
-                start: 'top 85%',
-                toggleActions: 'play none none none'
-            }, scrollOpts || {})
+    // ── CSS-Based Reveal System ──────────────────────────
+    // Instead of dozens of GSAP ScrollTriggers, we use ONE
+    // IntersectionObserver that adds a `.is-visible` class.
+    // All animation is handled by CSS transitions — much smoother.
+
+    function initReveals() {
+        // Hero entrance — simple CSS class, no GSAP needed
+        requestAnimationFrame(() => {
+            document.body.classList.add('hero-ready');
         });
-        return gsap.fromTo(targets, fromVars, to);
-    }
 
-    // Clip-path wipe reveal (bottom to top)
-    function clipReveal(targets, triggerEl, scrollOpts) {
-        return gsap.fromTo(targets,
-            { clipPath: 'inset(100% 0% 0% 0%)' },
-            {
-                clipPath: 'inset(0% 0% 0% 0%)',
-                duration: 1.2,
-                ease: 'power3.inOut',
-                scrollTrigger: Object.assign({
-                    trigger: triggerEl,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }, scrollOpts || {})
-            }
-        );
-    }
+        // Single IntersectionObserver for ALL reveal elements
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -60px 0px'
+        });
 
-    // ── Main Animations ──────────────────────────────────
-    function initAnimations() {
+        // Observe all revealable elements
+        const revealSelectors = [
+            '.section-label',
+            '.section-headline',
+            '.section-body',
+            '[data-reveal]',
+            '.glass-card',
+            '.pillar-card',
+            '.service-pill',
+            '.capability-item',
+            '.budget-row',
+            '.case-card',
+            '.partner-card',
+            '.team-card',
+            '.engagement-card',
+            '.venue-detail',
+            '.contact-item',
+            '.contact-icon',
+            '.cta-button',
+            '.footer-bar',
+            '.stat-card'
+        ];
 
-        // ── Hero Entrance (immediate, no scroll trigger) ──
-        const heroTl = gsap.timeline();
-        heroTl
-            .fromTo('.hero-eyebrow',
-                { opacity: 0, y: 20, letterSpacing: '0.2em' },
-                { opacity: 1, y: 0, letterSpacing: '0.35em', duration: 1, ease: 'power3.out' }
-            )
-            .fromTo('.title-line',
-                { opacity: 0, y: 60 },
-                { opacity: 1, y: 0, duration: 1.4, stagger: 0.18, ease: 'expo.out' },
-                '-=0.5'
-            )
-            .fromTo('.hero-subtitle',
-                { opacity: 0, y: 20 },
-                { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' },
-                '-=0.5'
-            )
-            .fromTo('.hero-line',
-                { scaleX: 0, transformOrigin: 'left center' },
-                { scaleX: 1, duration: 1, ease: 'power2.inOut' },
-                '-=0.4'
-            )
-            .fromTo('.scroll-indicator',
-                { opacity: 0, y: 15 },
-                { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-                '-=0.2'
-            );
+        document.querySelectorAll(revealSelectors.join(',')).forEach(el => {
+            el.classList.add('reveal');
+            revealObserver.observe(el);
+        });
 
-        // Safety for hero content in frozen tabs
+        // Add stagger delays to grouped children
+        addStaggerDelays('.cards-grid', '.glass-card', 0.08);
+        addStaggerDelays('.pillars-grid', '.pillar-card', 0.1);
+        addStaggerDelays('.service-pillars', '.service-pill', 0.04);
+        addStaggerDelays('.capabilities-list', '.capability-item', 0.05);
+        addStaggerDelays('.budget-table', '.budget-row', 0.04);
+        addStaggerDelays('.case-studies-grid', '.case-card', 0.12);
+        addStaggerDelays('.partners-grid', '.partner-card', 0.06);
+        addStaggerDelays('.team-grid', '.team-card', 0.1);
+        addStaggerDelays('.engagement-options', '.engagement-card', 0.12);
+        addStaggerDelays('.venue-details', '.venue-detail', 0.08);
+        addStaggerDelays('.contact-grid', '.contact-item', 0.06);
+
+        // Animated counters — keep these as JS since they need counting logic
+        initCounters();
+
+        // Background parallax — simple transform on scroll, no GSAP needed
+        initParallax();
+
+        // Safety net: after 6 seconds, force-show anything still hidden
         setTimeout(function () {
-            document.querySelectorAll('.hero-eyebrow, .title-line, .hero-subtitle, .hero-line, .scroll-indicator').forEach(function (el) {
-                if (getComputedStyle(el).opacity === '0') {
-                    el.style.opacity = '1';
-                    el.style.transform = 'none';
+            document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
+                el.classList.add('is-visible');
+            });
+        }, 6000);
+    }
+
+    function addStaggerDelays(parentSelector, childSelector, delayStep) {
+        document.querySelectorAll(parentSelector).forEach(parent => {
+            parent.querySelectorAll(childSelector).forEach((child, i) => {
+                child.style.transitionDelay = (i * delayStep) + 's';
+            });
+        });
+    }
+
+    // ── Animated Counters ────────────────────────────────
+    function initCounters() {
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
                 }
             });
-        }, 3000);
+        }, { threshold: 0.3 });
 
-        // ── Section Labels — fade + letter-spacing ──
-        document.querySelectorAll('.section-label').forEach(el => {
-            scrollReveal(el, el,
-                { opacity: 0, y: 12, letterSpacing: '0.15em' },
-                { letterSpacing: '0.3em', duration: 0.9 },
-                { start: 'top 88%' }
-            );
-        });
-
-        // ── Section Headlines — slide up, bold entrance ──
-        document.querySelectorAll('.section-headline').forEach(el => {
-            scrollReveal(el, el,
-                { opacity: 0, y: 40 },
-                { duration: 1.1, ease: 'expo.out' },
-                { start: 'top 88%' }
-            );
-        });
-
-        // ── Section Body — gentle fade ──
-        document.querySelectorAll('.section-body').forEach(el => {
-            scrollReveal(el, el,
-                { opacity: 0, y: 18 },
-                { duration: 0.85, delay: 0.1, ease: 'power2.out' },
-                { start: 'top 88%' }
-            );
-        });
-
-        // ── Generic [data-reveal] ──
-        document.querySelectorAll('[data-reveal]').forEach(el => {
-            scrollReveal(el, el,
-                { opacity: 0, y: 30 },
-                { duration: 0.9 },
-                { start: 'top 90%' }
-            );
-        });
-
-        // ── Glass Cards — stagger with slight scale ──
-        document.querySelectorAll('.cards-grid').forEach(grid => {
-            const cards = grid.querySelectorAll('.glass-card');
-            scrollReveal(cards, grid,
-                { opacity: 0, y: 50, scale: 0.96 },
-                { duration: 0.9, stagger: 0.12, ease: 'power3.out' },
-                { start: 'top 82%' }
-            );
-        });
-
-        // ── Pillar Cards — cascade from bottom with rotation ──
-        const pillarCards = document.querySelectorAll('.pillar-card');
-        if (pillarCards.length) {
-            scrollReveal(pillarCards, '.pillars-grid',
-                { opacity: 0, y: 60, rotationX: 8 },
-                { duration: 1, stagger: 0.18, ease: 'power3.out', rotationX: 0 },
-                { start: 'top 82%' }
-            );
-        }
-
-        // ── Service Pills — pop in with elastic ease ──
-        const pills = document.querySelectorAll('.service-pill');
-        if (pills.length) {
-            scrollReveal(pills, '.service-pillars',
-                { opacity: 0, y: 20, scale: 0.8 },
-                { duration: 0.7, stagger: 0.06, ease: 'back.out(2)' }
-            );
-        }
-
-        // ── Capability Items — slide in from left ──
-        const capItems = document.querySelectorAll('.capability-item');
-        if (capItems.length) {
-            scrollReveal(capItems, '.capabilities-list',
-                { opacity: 0, x: -40 },
-                { duration: 0.7, stagger: 0.08, ease: 'power3.out' },
-                { start: 'top 82%' }
-            );
-        }
-
-        // ── Animated Counters ──
         document.querySelectorAll('[data-count]').forEach(el => {
-            const target = parseInt(el.getAttribute('data-count'));
-            const obj = { val: 0 };
-
-            ScrollTrigger.create({
-                trigger: el,
-                start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 2.2,
-                        ease: 'power2.out',
-                        onUpdate: () => { el.textContent = Math.round(obj.val); }
-                    });
-                }
-            });
+            counterObserver.observe(el);
         });
+    }
 
-        // ── Stat Card Counters ──
-        document.querySelectorAll('.stat-card-number[data-count]').forEach(el => {
-            const target = parseInt(el.getAttribute('data-count'));
-            const obj = { val: 0 };
+    function animateCounter(el) {
+        const target = parseInt(el.getAttribute('data-count'));
+        const duration = 2000;
+        const start = performance.now();
 
-            ScrollTrigger.create({
-                trigger: el,
-                start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 2,
-                        ease: 'power2.out',
-                        onUpdate: () => { el.textContent = Math.round(obj.val); }
-                    });
-                }
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(target * eased);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    }
+
+    // ── Parallax (lightweight, no GSAP) ──────────────────
+    function initParallax() {
+        const bgImages = document.querySelectorAll('.bg-image');
+        if (!bgImages.length) return;
+
+        let scrollY = window.scrollY;
+        let ticking = false;
+
+        function updateParallax() {
+            bgImages.forEach(img => {
+                const section = img.closest('.section');
+                if (!section) return;
+                const rect = section.getBoundingClientRect();
+                const viewH = window.innerHeight;
+
+                // Only calculate if section is near viewport
+                if (rect.bottom < -100 || rect.top > viewH + 100) return;
+
+                const progress = (viewH - rect.top) / (viewH + rect.height);
+                const yOffset = (progress - 0.5) * -50;
+                const scale = 1 + progress * 0.06;
+                img.style.transform = 'translate3d(0,' + yOffset + 'px,0) scale(' + scale + ')';
             });
-        });
-
-        // ── Budget Table Rows — slide from left ──
-        const budgetRows = document.querySelectorAll('.budget-row');
-        if (budgetRows.length) {
-            scrollReveal(budgetRows, '.budget-table',
-                { opacity: 0, x: -25 },
-                { duration: 0.6, stagger: 0.07, ease: 'power2.out' }
-            );
+            ticking = false;
         }
 
-        // ── Background Parallax ──
-        document.querySelectorAll('.bg-image').forEach(img => {
-            gsap.to(img, {
-                scrollTrigger: {
-                    trigger: img.closest('.section'),
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.5
-                },
-                y: -60,
-                scale: 1.08,
-                ease: 'none'
-            });
-        });
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true });
 
-        // ── CTA Button — scale pop ──
-        const ctaButton = document.querySelector('.cta-button');
-        if (ctaButton) {
-            scrollReveal(ctaButton, ctaButton,
-                { opacity: 0, y: 20, scale: 0.92 },
-                { duration: 0.9, ease: 'back.out(1.8)' },
-                { start: 'top 92%' }
-            );
-        }
-
-        // ── Engagement Cards — stagger with scale ──
-        const engCards = document.querySelectorAll('.engagement-card');
-        if (engCards.length) {
-            scrollReveal(engCards, '.engagement-options',
-                { opacity: 0, y: 50, scale: 0.95 },
-                { duration: 1, stagger: 0.2, ease: 'power3.out' }
-            );
-        }
-
-        // ── Venue Details — stagger fade ──
-        const venueDetails = document.querySelectorAll('.venue-detail');
-        if (venueDetails.length) {
-            scrollReveal(venueDetails, '.venue-details',
-                { opacity: 0, y: 20 },
-                { duration: 0.7, stagger: 0.12, ease: 'power2.out' }
-            );
-        }
-
-        // ── Case Study Cards — clip-path wipe ──
-        const caseCards = document.querySelectorAll('.case-card');
-        if (caseCards.length) {
-            scrollReveal(caseCards, '.case-studies-grid',
-                { opacity: 0, y: 50 },
-                { duration: 1, stagger: 0.2, ease: 'power3.out' }
-            );
-        }
-
-        // ── Partner Cards — scale pop stagger ──
-        const partnerCards = document.querySelectorAll('.partner-card');
-        if (partnerCards.length) {
-            scrollReveal(partnerCards, '.partners-grid',
-                { opacity: 0, scale: 0.85 },
-                { duration: 0.7, stagger: 0.08, ease: 'back.out(1.4)' }
-            );
-        }
-
-        // ── Team Cards — slide up stagger ──
-        const teamCards = document.querySelectorAll('.team-card');
-        if (teamCards.length) {
-            scrollReveal(teamCards, '.team-grid',
-                { opacity: 0, y: 40 },
-                { duration: 0.9, stagger: 0.18, ease: 'power3.out' }
-            );
-        }
-
-        // ── Footer Bar — fade ──
-        const footerBar = document.querySelector('.footer-bar');
-        if (footerBar) {
-            scrollReveal(footerBar, footerBar,
-                { opacity: 0 },
-                { duration: 1, ease: 'power2.out' },
-                { start: 'top 95%' }
-            );
-        }
-
-        // ── Contact Icon — spin in ──
-        const contactIcon = document.querySelector('.contact-icon');
-        if (contactIcon) {
-            scrollReveal(contactIcon, contactIcon,
-                { opacity: 0, rotation: -120, scale: 0.4 },
-                { duration: 1.3, ease: 'back.out(1.6)' },
-                { start: 'top 90%' }
-            );
-        }
-
-        // ── Contact Items — stagger from right ──
-        const contactItems = document.querySelectorAll('.contact-item');
-        if (contactItems.length) {
-            scrollReveal(contactItems, '.contact-grid',
-                { opacity: 0, x: 25 },
-                { duration: 0.6, stagger: 0.1, ease: 'power2.out' },
-                { start: 'top 90%' }
-            );
-        }
+        // Initial call
+        updateParallax();
     }
 
     // ── Smooth Scroll for Anchor Links ───────────────────
@@ -544,32 +342,18 @@
         });
     });
 
-    // ── Global Visibility Safety Net ─────────────────────
-    var safetySelectors = '.section-label, .section-headline, .section-body, [data-reveal], .glass-card, .pillar-card, .service-pill, .capability-item, .budget-row, .case-card, .partner-card, .team-card, .engagement-card, .venue-detail, .contact-item, .cta-button, .footer-bar, .contact-icon';
-
-    function runSafetyNet() {
-        var stuck = document.querySelectorAll(safetySelectors);
-        stuck.forEach(function (el) {
-            var op = getComputedStyle(el).opacity;
-            if (op === '0' || parseFloat(op) < 0.1) {
-                el.style.opacity = '1';
-                el.style.transform = 'none';
-                el.style.visibility = 'visible';
-                el.style.clipPath = 'none';
-            }
-        });
-    }
-
-    setTimeout(runSafetyNet, 5000);
-    setTimeout(runSafetyNet, 10000);
-    setTimeout(runSafetyNet, 20000);
-
+    // ── Tab Visibility Safety ────────────────────────────
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            setTimeout(runSafetyNet, 500);
-            setTimeout(runSafetyNet, 2000);
-            // Also refresh ScrollTrigger when tab becomes visible
-            try { ScrollTrigger.refresh(); } catch (e) { }
+            // If user returns to tab, make sure everything visible is shown
+            setTimeout(function () {
+                document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        el.classList.add('is-visible');
+                    }
+                });
+            }, 300);
         }
     });
 
