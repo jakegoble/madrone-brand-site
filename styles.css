@@ -1731,6 +1731,37 @@ em {
     opacity: 0.85;
 }
 
+/* ---------- Pillar Clean Cards (deck-style) ---------- */
+.pillar-card--clean {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(225, 163, 119, 0.2);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 2rem !important;
+    text-align: center;
+    transition: all 0.5s var(--ease-smooth);
+}
+
+.pillar-card--clean:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(225, 163, 119, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(225, 163, 119, 0.08);
+}
+
+.pillar-card--clean .pillar-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.25rem;
+}
+
+.pillar-card--clean .pillar-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 /* ---------- Framework Visual ---------- */
 .framework-visual {
     margin: 0 auto var(--space-md);
