@@ -1012,11 +1012,50 @@ em {
 }
 
 /* ---------- Capacity Stats ---------- */
+/* Capacity — animated gradient overlay */
+.capacity-gradient-anim {
+    background: linear-gradient(
+        135deg,
+        rgba(225, 163, 119, 0.08) 0%,
+        rgba(5, 5, 7, 0.0) 40%,
+        rgba(225, 163, 119, 0.06) 60%,
+        rgba(5, 5, 7, 0.0) 100%
+    );
+    background-size: 300% 300%;
+    animation: capacityGradientShift 12s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes capacityGradientShift {
+    0%   { background-position: 0% 0%; }
+    25%  { background-position: 100% 50%; }
+    50%  { background-position: 50% 100%; }
+    75%  { background-position: 0% 50%; }
+    100% { background-position: 0% 0%; }
+}
+
 .capacity-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
+    gap: 2rem;
     margin-top: var(--space-md);
+}
+
+/* Glass card stat containers */
+.capacity-glass {
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 1.5rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+}
+
+.capacity-glass:hover {
+    border-color: rgba(225, 163, 119, 0.25);
+    box-shadow: 0 8px 32px rgba(225, 163, 119, 0.08), inset 0 0 0 1px rgba(225, 163, 119, 0.06);
+    transform: translateY(-2px);
 }
 
 .capacity-stat {
