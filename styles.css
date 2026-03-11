@@ -770,6 +770,43 @@ em {
     box-shadow: 0 0 24px rgba(225,163,119,0.1);
 }
 
+/* ---------- Our Edge Icon Animations ---------- */
+
+/* Card 1 — Venn: gentle breathe / pulse */
+.glass-card--feature:nth-child(1) .card-icon-wrap svg {
+    animation: vennBreathe 6s ease-in-out infinite;
+}
+@keyframes vennBreathe {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 6px rgba(225,163,119,0.2)); }
+}
+
+/* Card 2 — Diamond: slow faceted float */
+.glass-card--feature:nth-child(2) .card-icon-wrap svg {
+    animation: gemFloat 8s ease-in-out infinite;
+}
+@keyframes gemFloat {
+    0%, 100% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(4deg) translateY(-2px); }
+    50% { transform: rotate(0deg) translateY(0); }
+    75% { transform: rotate(-4deg) translateY(-1px); }
+}
+
+/* Card 3 — Radar: smooth sweep rotation */
+.glass-card--feature:nth-child(3) .card-icon-wrap svg {
+    animation: radarSweep 10s linear infinite;
+    transform-origin: center center;
+}
+@keyframes radarSweep {
+    to { transform: rotate(360deg); }
+}
+
+/* Hover boost for all edge icons */
+.glass-card--feature:hover .card-icon-wrap svg {
+    filter: drop-shadow(0 0 10px rgba(225,163,119,0.35));
+    transition: filter 0.4s ease;
+}
+
 /* Feature card overrides */
 .glass-card--feature {
     padding: 2rem 1.75rem 2.25rem;
@@ -1775,7 +1812,7 @@ em {
 
 /* — Strategy: constellation network — */
 .pillar-icon-anim .node {
-    fill: rgba(225, 163, 119, 0.9);
+    fill: #e1a377;
     animation: nodePulse 3s ease-in-out infinite;
 }
 .pillar-icon-anim .node--center { fill: #e1a377; animation-delay: 0.5s; }
@@ -1783,8 +1820,8 @@ em {
 .pillar-icon-anim .node--c { animation-delay: 1.5s; }
 
 .pillar-icon-anim .edge {
-    stroke: rgba(225, 163, 119, 0.25);
-    stroke-width: 1;
+    stroke: rgba(225, 163, 119, 0.5);
+    stroke-width: 1.5;
     stroke-dasharray: 60;
     stroke-dashoffset: 60;
     animation: edgeDraw 2.5s ease forwards;
@@ -1796,16 +1833,16 @@ em {
 .pillar-icon-anim .edge--6 { animation-delay: 1.5s; }
 
 .pillar-icon-anim .orbit {
-    stroke: rgba(225, 163, 119, 0.08);
-    stroke-width: 1;
+    stroke: rgba(225, 163, 119, 0.15);
+    stroke-width: 1.5;
     stroke-dasharray: 4 6;
     animation: orbitSpin 20s linear infinite;
     transform-origin: 32px 32px;
 }
 
 @keyframes nodePulse {
-    0%, 100% { opacity: 0.7; r: 3; }
-    50% { opacity: 1; r: 3.8; }
+    0%, 100% { opacity: 0.8; r: 4; }
+    50% { opacity: 1; r: 5; }
 }
 
 @keyframes edgeDraw {
@@ -1818,14 +1855,14 @@ em {
 
 /* — Production: rising structure — */
 .pillar-icon-anim .stage-floor {
-    stroke: rgba(225, 163, 119, 0.3);
-    stroke-width: 1.5;
+    stroke: rgba(225, 163, 119, 0.6);
+    stroke-width: 2;
 }
 
 .pillar-icon-anim .block {
-    fill: rgba(225, 163, 119, 0.12);
-    stroke: rgba(225, 163, 119, 0.4);
-    stroke-width: 1;
+    fill: rgba(225, 163, 119, 0.18);
+    stroke: rgba(225, 163, 119, 0.65);
+    stroke-width: 1.5;
     animation: blockRise 2s ease-out forwards;
     opacity: 0;
 }
@@ -1836,14 +1873,14 @@ em {
 .pillar-icon-anim .peak {
     fill: none;
     stroke: #e1a377;
-    stroke-width: 1.2;
+    stroke-width: 2;
     opacity: 0;
     animation: peakReveal 1s ease forwards 1.4s;
 }
 
 .pillar-icon-anim .spine {
-    stroke: rgba(225, 163, 119, 0.3);
-    stroke-width: 1;
+    stroke: rgba(225, 163, 119, 0.5);
+    stroke-width: 1.5;
     stroke-dasharray: 20;
     stroke-dashoffset: 20;
     animation: edgeDraw 1s ease forwards 1.2s;
@@ -1866,8 +1903,8 @@ em {
 }
 
 .pillar-icon-anim .wave {
-    stroke: rgba(225, 163, 119, 0.3);
-    stroke-width: 1;
+    stroke: rgba(225, 163, 119, 0.5);
+    stroke-width: 1.5;
     fill: none;
     opacity: 0;
     animation: waveExpand 3s ease-out infinite;
@@ -1876,8 +1913,8 @@ em {
 .pillar-icon-anim .wave--3 { animation-delay: 2s; }
 
 .pillar-icon-anim .ray {
-    stroke: rgba(225, 163, 119, 0.2);
-    stroke-width: 1;
+    stroke: rgba(225, 163, 119, 0.4);
+    stroke-width: 1.5;
     stroke-dasharray: 30;
     stroke-dashoffset: 30;
     animation: edgeDraw 1.5s ease forwards;
@@ -1887,8 +1924,8 @@ em {
 .pillar-icon-anim .ray--w { animation-delay: 0.9s; }
 
 @keyframes corePulse {
-    0%, 100% { opacity: 0.8; r: 4; }
-    50% { opacity: 1; r: 5; }
+    0%, 100% { opacity: 0.85; r: 5; }
+    50% { opacity: 1; r: 6.5; }
 }
 
 @keyframes waveExpand {
