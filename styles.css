@@ -2127,84 +2127,71 @@ em {
     100% { background-position: 0% 0%; }
 }
 
-/* Client Portfolio — Category Grid */
-.client-portfolio-categories {
-    max-width: 1100px;
+/* Client Grid — Clean logo layout */
+.client-grid {
+    max-width: 1000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
-.client-category {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(225, 163, 119, 0.1);
-    border-radius: var(--radius-md);
-    padding: 1.75rem 2rem 1.5rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: border-color 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth);
+.client-grid__category {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
-.client-category:hover {
-    border-color: rgba(225, 163, 119, 0.2);
-    box-shadow: 0 4px 30px rgba(225, 163, 119, 0.05);
-}
-
-.client-category-label {
-    display: inline-block;
+.client-grid__label {
     font-family: var(--font-heading);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+    font-size: 0.6rem;
+    font-weight: 500;
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-bottom: 1.25rem;
+    letter-spacing: 0.2em;
+    margin: 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(225, 163, 119, 0.18);
     opacity: 0.85;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(225, 163, 119, 0.15);
 }
 
-.client-logos-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
+.client-grid__logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.25rem;
     align-items: center;
+    justify-items: center;
 }
 
-.client-logo-item {
-    background: transparent;
-    border: 1px solid transparent;
+.client-grid__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 56px;
+    padding: 0.5rem 0.75rem;
     border-radius: var(--radius-md);
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s var(--ease-smooth);
+    transition: background 0.35s var(--ease-smooth);
 }
 
-.client-logo-item img {
-    max-width: 90px;
-    max-height: 34px;
+.client-grid__item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.client-grid__item img {
+    max-width: 88px;
+    max-height: 32px;
     width: auto;
     height: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
-    opacity: 0.6;
-    transition: opacity 0.4s var(--ease-smooth), filter 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+    opacity: 0.45;
+    transition: opacity 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth);
 }
 
-.client-logo-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(225, 163, 119, 0.15);
-}
-
-.client-logo-item:hover img {
-    opacity: 1;
-    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(350deg) brightness(1.1);
-    transform: scale(1.08);
+.client-grid__item:hover img {
+    opacity: 0.85;
+    transform: scale(1.06);
 }
 
 /* ---------- Smooth Section Transitions ---------- */
@@ -2233,15 +2220,15 @@ em {
     .partners-grid--5 {
         grid-template-columns: repeat(3, 1fr);
     }
-    .client-logo-item {
-        padding: 0.75rem 1rem;
+    .client-grid__logos {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     }
-    .client-logo-item img {
-        max-width: 70px;
+    .client-grid__item {
+        height: 48px;
+    }
+    .client-grid__item img {
+        max-width: 72px;
         max-height: 28px;
-    }
-    .client-category {
-        padding: 1.5rem 1.25rem 1.25rem;
     }
     .why-stats-row {
         grid-template-columns: repeat(3, 1fr);
@@ -2310,18 +2297,24 @@ em {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .client-logo-item {
-        padding: 0.6rem 0.75rem;
+    .client-grid {
+        gap: 1.75rem;
     }
-    .client-logo-item img {
-        max-width: 55px;
+    .client-grid__logos {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+        gap: 0.15rem;
+    }
+    .client-grid__item {
+        height: 42px;
+        padding: 0.35rem 0.5rem;
+    }
+    .client-grid__item img {
+        max-width: 58px;
         max-height: 22px;
     }
-    .client-portfolio-categories {
-        gap: 1.25rem;
-    }
-    .client-category {
-        padding: 1.25rem 1rem 1rem;
+    .client-grid__label {
+        font-size: 0.55rem;
+        padding-bottom: 0.5rem;
     }
     .framework-bar {
         flex-direction: column;
