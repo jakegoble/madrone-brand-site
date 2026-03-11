@@ -175,7 +175,7 @@ html.lenis, html.lenis body {
 .hero-subtitle,
 .scroll-indicator {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateX(-50%) translateY(30px);
     transition: opacity 0.9s var(--reveal-ease), transform 1s var(--reveal-ease);
 }
 .hero-line {
@@ -210,7 +210,7 @@ html.lenis, html.lenis body {
 }
 .hero-ready .scroll-indicator {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
     transition-delay: 0.75s;
 }
 .lenis.lenis-stopped {
