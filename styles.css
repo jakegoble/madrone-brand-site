@@ -1065,6 +1065,33 @@ em {
     transform: translateY(-3px);
 }
 
+/* ── Model Pillars — lighter overlay so event photo shows through ── */
+#modelPillars .bg-overlay--heavy {
+    background: linear-gradient(180deg, rgba(5,5,7,0.5) 0%, rgba(5,5,7,0.6) 50%, rgba(5,5,7,0.72) 100%);
+}
+
+/* Model Pillars — animated gradient overlay */
+.pillars-gradient-anim {
+    background: linear-gradient(
+        120deg,
+        rgba(225, 163, 119, 0.08) 0%,
+        transparent 30%,
+        rgba(100, 140, 220, 0.06) 50%,
+        transparent 70%,
+        rgba(225, 163, 119, 0.06) 100%
+    );
+    background-size: 300% 300%;
+    animation: pillarsGradientShift 15s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes pillarsGradientShift {
+    0%   { background-position: 0% 0%; }
+    33%  { background-position: 100% 50%; }
+    66%  { background-position: 50% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 .capacity-stat {
     text-align: center;
 }
