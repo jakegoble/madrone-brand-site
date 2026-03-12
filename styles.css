@@ -2179,18 +2179,17 @@ em {
 }
 
 .client-grid__item img {
-    max-width: 88px;
-    max-height: 32px;
+    max-width: 100px;
+    max-height: 36px;
     width: auto;
     height: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.45;
+    opacity: 0.8;
     transition: opacity 0.35s var(--ease-smooth), transform 0.35s var(--ease-smooth);
 }
 
 .client-grid__item:hover img {
-    opacity: 0.85;
+    opacity: 1;
     transform: scale(1.06);
 }
 
