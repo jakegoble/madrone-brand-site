@@ -2168,7 +2168,7 @@ em {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 56px;
+    height: 64px;
     padding: 0.5rem 0.75rem;
     border-radius: var(--radius-md);
     transition: background 0.35s var(--ease-smooth);
@@ -2179,8 +2179,8 @@ em {
 }
 
 .client-grid__item img {
-    max-width: 100px;
-    max-height: 36px;
+    max-width: 120px;
+    max-height: 44px;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -2223,11 +2223,11 @@ em {
         grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     }
     .client-grid__item {
-        height: 48px;
+        height: 54px;
     }
     .client-grid__item img {
-        max-width: 72px;
-        max-height: 28px;
+        max-width: 90px;
+        max-height: 34px;
     }
     .why-stats-row {
         grid-template-columns: repeat(3, 1fr);
@@ -2304,12 +2304,12 @@ em {
         gap: 0.15rem;
     }
     .client-grid__item {
-        height: 42px;
+        height: 46px;
         padding: 0.35rem 0.5rem;
     }
     .client-grid__item img {
-        max-width: 58px;
-        max-height: 22px;
+        max-width: 68px;
+        max-height: 28px;
     }
     .client-grid__label {
         font-size: 0.55rem;
