@@ -1605,38 +1605,42 @@ em {
     overflow: hidden;
 }
 
-/* Gradient-only backgrounds for sections without unique photos */
+/* Lighter overlays for new photo sections */
+#framework .bg-overlay--heavy,
+#collaborators .bg-overlay--heavy {
+    background: linear-gradient(180deg, rgba(5,5,7,0.25) 0%, rgba(5,5,7,0.4) 50%, rgba(5,5,7,0.6) 100%);
+}
+#capabilities .bg-overlay--heavy,
+#budget .bg-overlay--heavy,
+#engagement .bg-overlay--heavy {
+    background: linear-gradient(180deg, rgba(5,5,7,0.4) 0%, rgba(5,5,7,0.55) 50%, rgba(5,5,7,0.7) 100%);
+}
+
+/* Tinted gradient overlays for photo sections */
 .section-bg--gradient-warm {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    background: linear-gradient(160deg, #1a1210 0%, #2a1c16 30%, #1e1510 60%, #0f0c0a 100%);
+    z-index: 2;
+    background: linear-gradient(160deg, rgba(26,18,16,0.3) 0%, rgba(42,28,22,0.25) 50%, rgba(15,12,10,0.4) 100%);
 }
 .section-bg--gradient-cool {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    background: linear-gradient(200deg, #0a0f1a 0%, #111827 35%, #0d1117 65%, #080a0f 100%);
+    z-index: 2;
+    background: linear-gradient(200deg, rgba(10,15,26,0.3) 0%, rgba(17,24,39,0.25) 50%, rgba(8,10,15,0.4) 100%);
 }
 .section-bg--gradient-deep {
     position: absolute;
     inset: 0;
-    z-index: 0;
-    background: linear-gradient(140deg, #0f0a14 0%, #1a1025 30%, #12101c 60%, #0a080e 100%);
+    z-index: 2;
+    background: linear-gradient(140deg, rgba(15,10,20,0.3) 0%, rgba(26,16,37,0.25) 50%, rgba(10,8,14,0.4) 100%);
 }
 
-.contact-bg-gradient {
+.contact-aurora {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        160deg,
-        #050507 0%,
-        #0a1a1f 25%,
-        #0d2a2d 45%,
-        #0f3538 60%,
-        #0a2426 75%,
-        #050507 100%
-    );
+    width: 100%;
+    height: 100%;
     z-index: 1;
 }
 
@@ -1644,63 +1648,11 @@ em {
     position: absolute;
     inset: 0;
     z-index: 3;
-    opacity: 0.35;
+    opacity: 0.2;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px 200px;
     pointer-events: none;
-    animation: grainShift 8s steps(10) infinite;
-}
-
-@keyframes grainShift {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -10%); }
-    20% { transform: translate(-15%, 5%); }
-    30% { transform: translate(7%, -15%); }
-    40% { transform: translate(-5%, 15%); }
-    50% { transform: translate(-15%, 10%); }
-    60% { transform: translate(15%, 0%); }
-    70% { transform: translate(0%, 10%); }
-    80% { transform: translate(3%, -15%); }
-    90% { transform: translate(-10%, 10%); }
-}
-
-.contact-bg-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    z-index: 2;
-    pointer-events: none;
-}
-
-.contact-bg-glow--1 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, transparent 70%);
-    top: -10%;
-    right: -5%;
-    animation: glowDrift1 12s ease-in-out infinite alternate;
-}
-
-.contact-bg-glow--2 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(225, 163, 119, 0.08) 0%, transparent 70%);
-    bottom: -15%;
-    left: -5%;
-    animation: glowDrift2 15s ease-in-out infinite alternate;
-}
-
-@keyframes glowDrift1 {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-40px, 30px) scale(1.1); }
-    100% { transform: translate(20px, -20px) scale(0.95); }
-}
-
-@keyframes glowDrift2 {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, -20px) scale(1.05); }
-    100% { transform: translate(-20px, 15px) scale(1.1); }
 }
 
 /* ---------- Contact ---------- */
@@ -2012,15 +1964,13 @@ em {
     transition: filter 0.5s ease;
 }
 
-/* ---------- Framework Section (dark, no photo) ---------- */
+/* ---------- Framework Section ---------- */
 .framework-section {
     background: #050507;
     position: relative;
     overflow: hidden;
     padding: 6rem 0;
 }
-
-.framework-section .section-bg { display: none; }
 
 .framework-geo {
     position: absolute;

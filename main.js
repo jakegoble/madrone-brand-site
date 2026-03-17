@@ -478,4 +478,158 @@
         });
     }
 
+    // ── Contact Aurora Canvas ───────────────────────────
+    var auroraCanvas = document.getElementById('contactAurora');
+    if (auroraCanvas) {
+        var actx = auroraCanvas.getContext('2d');
+        var aW, aH;
+
+        function resizeAurora() {
+            var rect = auroraCanvas.parentElement.getBoundingClientRect();
+            aW = auroraCanvas.width = rect.width;
+            aH = auroraCanvas.height = rect.height;
+        }
+
+        // Aurora ribbons — flowing sine-wave light bands
+        var ribbons = [];
+        var ribbonCount = 5;
+        var palette = [
+            [225, 163, 119],  // warm gold
+            [13, 148, 136],   // teal
+            [168, 130, 100],  // bronze
+            [80, 180, 170],   // bright teal
+            [200, 140, 90],   // amber
+        ];
+
+        function initRibbons() {
+            ribbons = [];
+            for (var i = 0; i < ribbonCount; i++) {
+                ribbons.push({
+                    y: aH * (0.2 + Math.random() * 0.6),
+                    amplitude: 30 + Math.random() * 60,
+                    wavelength: 0.002 + Math.random() * 0.003,
+                    speed: 0.3 + Math.random() * 0.5,
+                    phase: Math.random() * Math.PI * 2,
+                    thickness: 60 + Math.random() * 100,
+                    color: palette[i % palette.length],
+                    opacity: 0.04 + Math.random() * 0.04,
+                    drift: (Math.random() - 0.5) * 0.15,
+                });
+            }
+        }
+
+        // Floating particles
+        var sparks = [];
+        var sparkCount = 40;
+
+        function initSparks() {
+            sparks = [];
+            for (var i = 0; i < sparkCount; i++) {
+                sparks.push({
+                    x: Math.random() * aW,
+                    y: Math.random() * aH,
+                    r: 0.5 + Math.random() * 1.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: -0.1 - Math.random() * 0.4,
+                    alpha: 0.1 + Math.random() * 0.4,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.02 + Math.random() * 0.03,
+                });
+            }
+        }
+
+        var auroraTime = 0;
+
+        function drawAurora() {
+            actx.fillStyle = '#050507';
+            actx.fillRect(0, 0, aW, aH);
+
+            // Draw ribbons
+            ribbons.forEach(function (r) {
+                r.phase += r.speed * 0.01;
+                r.y += r.drift;
+                if (r.y < aH * 0.1) r.drift = Math.abs(r.drift);
+                if (r.y > aH * 0.9) r.drift = -Math.abs(r.drift);
+
+                var grad = actx.createLinearGradient(0, r.y - r.thickness, 0, r.y + r.thickness);
+                grad.addColorStop(0, 'rgba(' + r.color.join(',') + ', 0)');
+                grad.addColorStop(0.3, 'rgba(' + r.color.join(',') + ',' + r.opacity + ')');
+                grad.addColorStop(0.5, 'rgba(' + r.color.join(',') + ',' + (r.opacity * 1.5) + ')');
+                grad.addColorStop(0.7, 'rgba(' + r.color.join(',') + ',' + r.opacity + ')');
+                grad.addColorStop(1, 'rgba(' + r.color.join(',') + ', 0)');
+
+                actx.beginPath();
+                actx.moveTo(-10, r.y + r.thickness);
+                for (var x = 0; x <= aW + 10; x += 4) {
+                    var wave = Math.sin(x * r.wavelength + r.phase) * r.amplitude;
+                    var wave2 = Math.sin(x * r.wavelength * 0.5 + r.phase * 1.3) * r.amplitude * 0.5;
+                    actx.lineTo(x, r.y + wave + wave2 - r.thickness);
+                }
+                for (var x2 = aW + 10; x2 >= -10; x2 -= 4) {
+                    var wave3 = Math.sin(x2 * r.wavelength + r.phase) * r.amplitude;
+                    var wave4 = Math.sin(x2 * r.wavelength * 0.5 + r.phase * 1.3) * r.amplitude * 0.5;
+                    actx.lineTo(x2, r.y + wave3 + wave4 + r.thickness);
+                }
+                actx.closePath();
+                actx.fillStyle = grad;
+                actx.fill();
+            });
+
+            // Draw sparks
+            sparks.forEach(function (s) {
+                s.x += s.vx;
+                s.y += s.vy;
+                s.pulse += s.pulseSpeed;
+                var flicker = 0.5 + 0.5 * Math.sin(s.pulse);
+                var a = s.alpha * flicker;
+
+                if (s.y < -10) { s.y = aH + 10; s.x = Math.random() * aW; }
+                if (s.x < -10) s.x = aW + 10;
+                if (s.x > aW + 10) s.x = -10;
+
+                actx.beginPath();
+                actx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                actx.fillStyle = 'rgba(225, 195, 160, ' + a + ')';
+                actx.fill();
+
+                // Glow
+                actx.beginPath();
+                actx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+                actx.fillStyle = 'rgba(225, 195, 160, ' + (a * 0.15) + ')';
+                actx.fill();
+            });
+
+            auroraTime++;
+        }
+
+        var auroraRunning = false;
+        function animateAurora() {
+            if (!auroraRunning) return;
+            drawAurora();
+            requestAnimationFrame(animateAurora);
+        }
+
+        var auroraObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting && !auroraRunning) {
+                    auroraRunning = true;
+                    animateAurora();
+                } else if (!entry.isIntersecting) {
+                    auroraRunning = false;
+                }
+            });
+        }, { rootMargin: '200px' });
+
+        resizeAurora();
+        initRibbons();
+        initSparks();
+        auroraObserver.observe(auroraCanvas.closest('.section'));
+
+        window.addEventListener('resize', function () {
+            resizeAurora();
+            initRibbons();
+            initSparks();
+        });
+    }
+
 })();
